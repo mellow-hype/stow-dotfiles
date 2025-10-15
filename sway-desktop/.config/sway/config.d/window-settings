@@ -1,0 +1,45 @@
+
+# Window border
+default_border pixel 2
+for_window [floating] border pixel 5
+for_window [tiling] border pixel 2
+
+# Gaps
+gaps inner 5
+smart_gaps on
+
+# handle popups and other stuff that should always be floating
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+# by window type
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_type="popup_menu"] floating enable
+for_window [window_type="notification"] floating enable
+
+# float virt-manager
+for_window [app_id="virt-manager-wrapped"] floating enable, resize set 600 600
+
+# application-specific settings
+# 1password should auto-float and be moved to scratchpad when opened
+for_window [instance="1password" title="1Password$"] floating enable, resize set 800 600, move scratchpad, scratchpad show
+for_window [class="1Password" title="1Password$"] floating enable, resize set 800 600, move scratchpad, scratchpad show
+
+# float Thunar and automatically add it to the scratchpad workspace
+for_window [app_id="thunar" title="Thunar$"] floating enable, resize set 800 400, move scratchpad, scratchpad show
+
+# float mpv windows set with custom 'ytv' app-id
+for_window [app_id="ytv"] floating enable, resize set 800 500, sticky enable
+# floating mpv windows by default
+for_window [app_id="mpv"] floating enable, resize set 800 500, sticky enable
+
+# float custom app id window
+for_window [app_id="hyprctl"] floating enable
+
+# clementine windows should flot by default
+for_window [app_id="org.clementine_player.Clementine"] floating enable
+
+# float windows started with nmtui app id (run foot with app id flag to launch this)
+for_window [app_id="nmtui"] floating enable, resize set 600 600
+

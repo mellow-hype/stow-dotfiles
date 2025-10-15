@@ -1,0 +1,16 @@
+# media control commands
+set $vol_up "/home/hyper/bin/volume.sh up"
+set $vol_down "/home/hyper/bin/volume.sh down"
+set $vol_mute "/home/hyper/bin/volume.sh mute"
+set $mic_mute "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+
+# Brightness controls
+bindsym XF86MonBrightnessDown exec $bright_down
+bindsym XF86MonBrightnessUp exec $bright_up
+
+# Audio controls
+bindsym XF86AudioRaiseVolume exec $vol_up
+bindsym XF86AudioLowerVolume exec $vol_down
+bindsym XF86AudioMute exec $vol_mute
+bindsym XF86AudioMicMute exec $mic_mute
+

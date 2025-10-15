@@ -1,0 +1,33 @@
+# Window decoration
+set $default_blue #5e8d87
+
+# "primary color" for theming; this is  really the only color that should be adjusted; everything
+# else is pretty well balanced/neutral (for inactive windows, etc)
+set $green          #9faa36
+
+# other useful colors
+set $gray_dark      #242322
+set $red            #fb4934
+set $white          #ffffff
+
+# highlight/primary color
+set $cl_high $green
+# urgent
+set $cl_urge $red
+# default bg
+set $cl_back $gray_dark
+# default fg
+set $cl_fore $white
+# indicator
+set $cl_indi #a54242
+# mid darkness gray
+set $cl_gray #4c4c4c
+set $cl_gray2 #818181
+
+# # class               border   bground  text     indi     child_border
+client.focused          $cl_high $cl_high $cl_back $cl_indi $cl_high
+client.focused_inactive $cl_high $cl_gray $cl_high $cl_back $cl_back
+client.unfocused        $cl_back $cl_back $cl_gray2 $cl_back $cl_back
+client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
+client.background       #FFFFFF
+

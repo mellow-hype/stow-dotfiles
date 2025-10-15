@@ -1,0 +1,45 @@
+include $subcfgs/colors.gruvbox-core
+
+# "primary color" for theming; this is  really the only color that should be adjusted; everything
+# else is pretty well balanced/neutral (for inactive windows, etc)
+set $green          $neutral_green
+
+# highlight/primary color
+set $cl_high $green
+# urgent
+set $cl_urge $bright_red
+# default bg
+set $cl_back $light1
+# default fg
+set $cl_fore $dark0_hard
+# indicator
+set $cl_indi $neutral_red
+# mid darkness gray
+set $cl_gray $dark2
+
+# focused
+# focused-inact
+set $fi_back $light4
+set $fi_fore $dark2
+set $fi_bord $dark2
+set $fi_indi $light2
+
+# for unfocused
+set $uf_back $dark2
+set $uf_fore $light4
+
+# focused
+set $fo_bord $bright_orange
+set $fo_fore $faded_orange
+set $fo_indi $bright_green
+
+
+# class                 border   bground   text     indi     child_border
+client.focused          $fo_bord $cl_back  $fo_fore $fo_indi $fo_bord
+client.focused_inactive $fi_bord $fi_back  $cl_fore $fi_indi $fi_bord
+client.unfocused        $cl_high $uf_back  $uf_fore $cl_back $uf_fore
+client.urgent           $cl_urge $cl_urge  $cl_fore $cl_urge $cl_urge
+client.background       #FFFFFF
+
+# reset the wallpaper to a light-mode one
+output * bg $wallpapers/clouds-gruv.png fill

@@ -1,0 +1,38 @@
+## -- Custom Application Variables --
+# applications
+set $term foot
+set $browser firefox
+set $mbrowser qutebrowser
+set $notes obsidian
+
+# script for focusing windows via fuzzel menu
+set $swayfocus "/home/hyper/bin/dm-swayfocus"
+
+# constants/paths/etc.
+set $wallpapers "/home/hyper/.config/wallpapers"
+
+# Command for default menu provider
+set $fuzzel_cmd fuzzel -d -w 64 -I -l 8
+set $menu_exec dmenu_path | $fuzzel_cmd | xargs swaymsg exec --
+set $menu_apps fuzzel -w 64
+
+# ===============================
+# -- Media & Backlight --
+# ===============================
+# brightness control commands
+set $bright_down "light -U 5 && /home/hyper/bin/notify.sh brightness"
+set $bright_up "light -A 5 && /home/hyper/bin/notify.sh brightness"
+
+# media playlist menu
+set $menu_mpv "/home/hyper/bin/dm-ytpm | xargs /home/hyper/bin/ympv"
+
+# ===============================
+# -- Handling marks --
+# ===============================
+set $menu_input fuzzel -d -w 32 -l 3 -I
+set $get_marks swaymsg -t get_marks | jq '.[]' | tr -d '"'
+# menu to add/remove marks using toggle
+set $mark_menu $get_marks | $menu_input | xargs -r swaymsg -- mark --add --toggle
+# menu to jump to marks using toggle
+set $goto_menu $get_marks | $menu_input | xargs -r -I '{}' swaymsg -- '[con_mark="{}"] focus'
+

@@ -1,0 +1,54 @@
+## -- Custom Application Launchers --
+
+# open url in the clipboard with mpv (must be supported by mpv ytdl extension)
+set $url_prompt fuzzel -d --prompt-only 'url> '
+set $ympv_url_menu $url_prompt | xargs -r swaymsg exec -- mpv --wayland-app-id=ytv --profile=ytv
+set $ympv_url_clip wl-paste | xargs -r swaymsg exec -- mpv --wayland-app-id=ytv --profile=ytv
+
+
+# Reload the configuration file
+bindsym $mod+Control+c reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Control+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Window mover mode
+include $subcfgs/mode-mover
+bindsym $mod+Control+w mode $move_mode
+
+# Resize mode keybinds
+include $subcfgs/resize-mode
+bindsym $mod+Control+r mode $resize_mode
+
+# Toggle session manager menu
+set $sessman ~/.config/sway/sessionman.sh
+bindsym $mod+Control+Escape exec $sessman
+
+# 1password dmenu grabber
+set $dm1pass ~/bin/hyprkit/fz1p
+bindsym $mod+Control+o $dm1pass
+
+# open nmtui in dedicated foot terminal window
+set $nmtui_app foot -a nmtui nmtui
+bindsym $mod+Control+n exec $nmtui_app
+
+# lock toggle
+set $lock swaylock
+bindsym $mod+Control+q exec $lock
+
+# screenshots select
+set $screenclip "/home/hyper/bin/hyprkit/grimsel"
+bindsym $mod+Control+p exec $screenclip
+
+# prompt for url to open in mpv
+bindsym $mod+Control+v exec $ympv_url_menu
+bindsym $mod+Control+Shift+v exec $ympv_url_clip
+
+# Select windows from scratchpad with fuzzel menu
+set $scratchmenu "/home/hyper/bin/hyprkit/dm-scratchmenu"
+bindsym $mod+Control+Tab exec $scratchmenu
+
+# Dark/light mode switcher script
+bindsym $mod+Control+l exec ~/bin/themer.py light; reload
+bindsym $mod+Control+Shift+l exec ~/bin/themer.py dark; reload
+

@@ -1,0 +1,25 @@
+
+set $move_mode "move window mode"
+mode $move_mode {
+    # "automove" to upper/lower quadrants
+    bindsym u move position 5ppt 2ppt
+    bindsym o move position 80ppt 2ppt
+    bindsym m move position 5ppt 70ppt
+    bindsym period move position 80ppt 70ppt
+    # center
+    bindsym c move position center
+
+    # "shift-mode" up/down/left/right
+    bindsym j move down 15px
+    bindsym k move up 15px
+    bindsym h move left 15px
+    bindsym l move right 15px
+    bindsym Down move down 15px
+    bindsym Up move up 15px
+    bindsym Left move left 15px
+    bindsym Right move right 15px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+

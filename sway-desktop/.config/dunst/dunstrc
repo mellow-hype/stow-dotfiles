@@ -1,0 +1,123 @@
+[global]
+# General Config
+monitor = 0
+follow = mouse
+indicate_hidden = yes
+show_indicators = yes
+always_run_script = true
+notification_limit = 10
+dmenu = "fuzzel -d -p 'dunst > '"
+
+# Placement and dimensions
+origin = top-right
+offset = 30x30
+width = (200,600)
+height = (0, 2000)
+padding = 10
+horizontal_padding = 5
+line_height = 0
+frame_width = 3
+gap_size = 6
+
+# Global Colors
+background = "#373b41"
+foreground = "#ebdbb2"
+highlight = "#99cc99"
+frame_color = "#282828"
+separator_color = "#d3c6aa"
+
+# Display
+progress_bar = true
+
+# Text
+format = "<b>%s</b>\n%b"
+#font = Terminus 12
+font = FiraCode Nerd Font Mono 10
+markup = full
+word-wrap = yes
+alignment = left
+vertical_alignment = center
+ignore_newline = no
+
+# icon settings
+icon_position = left
+min_icon_size = 0
+max_icon_size = 48
+icon_path = /run/current-system/sw/share/icons/Rodent/48x48/misc:/home/hyper/.config/gruvbox-icons/Gruvbox-Plus-Dark/categories/scalable/:/home/hyper/.config/gruvbox-icons/Gruvbox-Plus-Dark/status/32/:/home/hyper/.config/gruvbox-icons/Gruvbox-Plus-Dark/mimetypes/scalable/:/home/hyper/.config/gruvbox-icons/Gruvbox-Plus-Dark/panel/24/:/home/hyper/.config/gruvbox-icons/Gruvbox-Plus-Dark/actions/24/
+
+
+# Mouse Actions
+mouse_left_click = close_current
+mouse_middle_click = do_action, close_current
+mouse_right_click = close_all
+
+
+## COLORS
+# #ebdbb2 - light-1
+# #859289 - whiteish
+# #232323 - black
+# #ffcc66 - yellow
+# #f22c40 - red
+# #99cc99 - green-soft
+# #8ec07c - cyan
+
+[urgency_low]
+msg_urgency = low
+# white
+frame_color = "#ebdbb2"
+
+[urgency_normal]
+msg_urgency = normal
+# cyan
+frame_color = "#8ec07c"
+
+[urgency_critical]
+msg_urgency = critical
+format = "<big><b>[!] %s</b></big>\n%b"
+# dark
+background = "#2e2e2e"
+# red
+foreground = "#f22c40"
+frame_color ="#f22c40"
+default_icon = "computer-fail"
+
+
+## CUSTOM MATCHING RULES
+[brightness]
+appname = "brightness"
+foreground = "#ffcc66"
+highlight = "#f2f0f0"
+format = "<b>%s</b>\n%p\n%b"
+
+[volume]
+appname = "volume"
+# yellow
+foreground = "#ffcc66"
+# green-soft (bar)
+highlight = "#99cc99"
+format = "<b>%s</b>\n%p\n%b"
+
+[playing]
+category = "now-playing"
+foreground = "#ebdbb2"
+format = "<b><i>%s <small>(%a)</small></i></b>\n%b"
+icon_position = right
+alignment = left
+stack_duplicates = true
+hide_duplicate_count = true
+default_icon = "media-playback-playing"
+
+[alerter]
+appname = alerter
+alignment = center
+background = "#232323"
+foreground = "#f22c40"
+highlight = "#f2f0f0"
+
+[fzop]
+appname = fzop
+background = "#756bb1"
+foreground = "#ffffff"
+format = "<b>%s</b>\n<i>%b</i>"
+default_icon = "1password"
+

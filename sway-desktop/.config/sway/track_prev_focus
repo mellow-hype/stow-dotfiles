@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+# kill any previous instances of the script that may still be running
+PREV_PID=$(ps -L -Ao pid,cmd | grep '\-t subscribe' | grep -v "grep" | cut -d " " -f 2)
+if [ ! -z "$PREV_PID" ]; then
+    echo "asdf"
+    kill -9 $PREV_PID
+fi
+
+# get the ID of the currently focused container
+prev_focus=$(swaymsg -r -t get_seats | jq '.[0].focus')
+
+# subscribe to focus events so we know when focus changes happen
+swaymsg -m -t subscribe '["window"]' | \
+  jq --unbuffered 'select(.change == "focus").container.id' | \
+  while read new_focus; do
+    # when we read a $new_focus,set a mark on the previously focused container
+    swaymsg "[con_id=${prev_focus}] mark --add _prev" &>/dev/null
+    prev_focus=$new_focus
+  done

@@ -1,0 +1,7 @@
+daemonize
+ignore-empty-password
+
+image=~/.config/acid_burn_black.jpg
+scaling=center
+color=181818
+

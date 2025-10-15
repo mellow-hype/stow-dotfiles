@@ -1,0 +1,80 @@
+
+general {
+        colors = true
+        interval = 5
+        markup = "pango"
+}
+
+order += "read_file playing"
+order += "ethernet _first_"
+order += "wireless _first_"
+order += "disk /"
+order += "disk /media/hypercore/core"
+#order += "disk /media/hypercore/media"
+order += "memory"
+order += "battery 0"
+order += "tztime local"
+
+wireless _first_ {
+        format_up = "  %essid (%ip)"
+        format_down = "  down"
+        color_good = "#b8bb26"
+}
+ethernet _first_ {
+        format_up = "  %ip"
+        format_down = "  down"
+        color_good = "#b8bb26"
+}
+
+battery 0 {
+        format = "%status %percentage %remaining"
+        status_full = "🔋 FULL"
+        status_idle = "🔋 IDLE"
+        status_bat = "🔋 BAT"
+        status_chr = "⚡ CHR"
+        last_full_capacity = true
+}
+
+# DISKS/PARTITIONS
+disk "/" {
+        format = " root: %free free (%percentage_used use)"
+        separator = false
+}
+
+disk "/media/hypercore/core" {
+        format = " core: %free free (%percentage_used use)"
+}
+
+disk "/media/hypercore/media" {
+        format = " media: %free free (%percentage_used use)"
+}
+
+# CPU metrics
+cpu_usage {
+        format = " cpu: %usage"
+        separator = false
+}
+
+load {
+        format = "[%1min, %5min, %15min]"
+}
+
+
+memory {
+        format = "mem: %used/%total used"
+        threshold_degraded = "1G"
+        format_degraded = "MEMORY < %available"
+}
+
+tztime local {
+        format = "<span foreground='#6699cc'>%Y-%m-%d %I:%M %p</span>"
+}
+
+read_file playing {
+    path = "/tmp/playing.last"
+    max_characters = 64
+    format = " %content"
+    color_good = "#fabd2f"
+    format_bad = " unknown"
+    color_bad = "#665c54"
+}

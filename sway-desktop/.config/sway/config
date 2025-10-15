@@ -1,0 +1,224 @@
+###################################################################################################
+## GLOBALS
+###################################################################################################
+font pango:Terminus 8
+include /etc/sway/config-vars.d/*
+
+### Variables
+set $subcfgs "/home/hyper/.config/sway/config.d"
+include $subcfgs/variables
+
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Vim-like directional bindings
+set $left h
+set $down j
+set $up k
+set $right l
+
+
+### Wallpaper
+output * bg /home/hyper/.config/faces.png fill
+
+### Input configuration
+input "type:keyboard" {
+    xkb_options caps:super
+}
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+floating_modifier $mod normal
+
+
+###################################################################################################
+# KEY BINDINGS
+# ------------
+# Key bindings are split into "layers", where each layer is accessed using a specific modifier.
+# This isn't 100% consistent everywhere but for for the most part the idea is to group together
+# different types of key-bindings in a logical way.
+#
+# Currently, the following layers are in use:
+#
+#   1. Primary (no additional mod): main layer for fundamental WM operations
+#   2. Secondary (+Shift): secondary layer for core WM operations
+#   3. Utility (+Control): mainly used for custom application launchers, custom menus, and special
+#       WM controls. can also be thought of as the "control" layer.
+#
+###################################################################################################
+
+# ============= PRIMARY LAYER =============
+## Media and backlight keybinds
+include $subcfgs/media-controls
+
+# Start a terminal
+bindsym $mod+Return exec $term
+
+# Start a browser
+bindsym $mod+w exec $browser
+# qutebrowser
+bindsym $mod+q exec $mbrowser
+
+# Start exec launcher (dmenu path exec)
+bindsym $mod+d exec $menu_exec
+# Start app launcher (xdg app mode)
+bindsym $mod+Space exec $menu_apps
+
+# Focus selector menu
+bindsym $mod+Tab exec $swayfocus
+
+# --- Focus ---
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+period focus mode_toggle
+
+# Focus previously focused window (depends on `track_prev_focus`)
+bindsym $mod+grave [con_mark="_prev"] focus
+
+# Move focus to the parent container
+bindsym $mod+a focus parent
+# Move focus to the child container
+bindsym $mod+z focus child
+
+# --- Workspaces ---
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# quickly switch back and forth between most recently focused workspaces
+bindsym $mod+slash workspace back_and_forth
+
+# scroll through workspaces with arrows
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
+
+# --- Layout stuff ---
+# Toggle split mode
+bindsym $mod+v split toggle
+
+# --- Scratchpad ---
+# Cycle through scratchpad windows
+bindsym $mod+minus scratchpad show
+
+# Custom binding to focus 1password scratchpad window if it exists
+bindsym $mod+p [instance="1password"] scratchpad show
+
+# -- Custom Menus --
+# Custom menu to toggle marks on currently focused window
+bindsym $mod+m exec $mark_menu
+# Custom menu to select/jump to mark
+bindsym $mod+g exec $goto_menu
+
+
+# ============= SECONDARY LAYER =============
+#
+# Kill focused window
+bindsym $mod+Shift+x kill
+
+# --- Scratchpad ---
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus floating enable, resize set 800 600; move scratchpad
+# Scratchpad selector menu
+bindsym $mod+Shift+Tab exec $scratchmenu
+
+# Move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# --- Workspaces ---
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# --- Layout stuff ---
+# Switch the current container between different layout styles
+bindsym $mod+Shift+v layout toggle splitv splith
+bindsym $mod+Shift+t layout toggle all
+
+# Make the current focus fullscreen
+bindsym $mod+Shift+f fullscreen
+# Toggle window between tiling and floating mode
+bindsym $mod+Shift+Space floating toggle, resize set 800 800
+
+# Toggle sticky ("pin") on a container (must be floating to take effect)
+bindsym $mod+Shift+s sticky toggle
+
+# ============= UTILITY LAYER =============
+## Application-launcher keybinds
+include $subcfgs/control-layer-bindings
+
+
+###################################################################################################
+## VISUAL/THEMING
+###################################################################################################
+include $subcfgs/window-settings
+# default colors (in case custom ones aren't set by the host-specific config below)
+include $subcfgs/colors.default
+
+###################################################################################################
+## HOST-SPECIFIC CONFIG
+##  NOTE: must come before bar but after default color load so colors are applied correctly
+###################################################################################################
+include $subcfgs/$(hostname).config
+
+###################################################################################################
+## BAR
+###################################################################################################
+# Status Bar:
+bar {
+    position top
+    status_command i3status
+
+    colors {
+        background $cl_back
+        statusline $cl_fore
+        separator  $cl_gray
+
+        focused_workspace  $cl_fore $cl_high    $cl_back
+        active_workspace   $cl_fore $cl_high    $cl_back
+        inactive_workspace $cl_gray $cl_back    $cl_fore
+        urgent_workspace   $cl_urge $cl_urge    $cl_fore
+        binding_mode       $cl_back $cl_urge    $cl_fore
+    }
+}
+
+
+###################################################################################################
+## AUTOSTARTS
+###################################################################################################
+# kanshi systemd service
+exec_always "sleep 1; systemctl --user restart kanshi.service"
+# gammastep systemd service
+exec "sleep 1; systemctl --user start gammastep.service"
+# Idle configuration
+exec ~/.config/sway/idle.sh &
+# Start focus tracker for focus-prev keybind
+exec_always ~/.config/sway/track_prev_focus &
+
+# host-specific autostart
+include $subcfgs/$(hostname)-autostart.config
+
+# default configs from system
+include /etc/sway/config.d/*
