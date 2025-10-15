@@ -1,0 +1,3 @@
+[submodule "scripts/desktop-scripts"]
+	path = scripts/desktop-scripts
+	url = git@github.com:mellow-hype/desktop-scripts.git
