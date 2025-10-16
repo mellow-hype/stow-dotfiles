@@ -107,4 +107,7 @@ alias tma="tmux attach -t"
 alias tmn="tmux new -s"
 
 # import other aliases
-source "$HOME/.config/aliases"
+ALIAS_FILE="$HOME/.config/aliases"
+if [[ -e "$ALIAS_FILE" ]]; then
+    source "$ALIAS_FILE"
+fi
