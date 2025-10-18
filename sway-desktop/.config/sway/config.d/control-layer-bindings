@@ -37,7 +37,7 @@ set $lock swaylock
 bindsym $mod+Control+q exec $lock
 
 # screenshots select
-set $screenclip "/home/hyper/bin/hyprkit/grimsel"
+set $screenclip "/home/hyper/bin/grimsel"
 bindsym $mod+Control+p exec $screenclip
 
 # prompt for url to open in mpv
@@ -45,7 +45,7 @@ bindsym $mod+Control+v exec $ympv_url_menu
 bindsym $mod+Control+Shift+v exec $ympv_url_clip
 
 # Select windows from scratchpad with fuzzel menu
-set $scratchmenu "/home/hyper/bin/hyprkit/dm-scratchmenu"
+set $scratchmenu "/home/hyper/bin/dm-scratchmenu"
 bindsym $mod+Control+Tab exec $scratchmenu
 
 # Dark/light mode switcher script
