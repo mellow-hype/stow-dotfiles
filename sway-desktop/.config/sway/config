@@ -123,15 +123,18 @@ bindsym $mod+g exec $goto_menu
 
 
 # ============= SECONDARY LAYER =============
-#
 # Kill focused window
 bindsym $mod+Shift+x kill
+
+# Toggle window between tiling and floating mode
+bindsym $mod+Shift+Space floating toggle, resize set 800 800
+
+# Toggle sticky ("pin") on a container (must be floating to take effect)
+bindsym $mod+Shift+s sticky toggle
 
 # --- Scratchpad ---
 # Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus floating enable, resize set 800 600; move scratchpad
-# Scratchpad selector menu
-bindsym $mod+Shift+Tab exec $scratchmenu
 
 # Move focused window
 bindsym $mod+Shift+$left move left
@@ -154,16 +157,10 @@ bindsym $mod+Shift+0 move container to workspace number 10
 
 # --- Layout stuff ---
 # Switch the current container between different layout styles
-bindsym $mod+Shift+v layout toggle splitv splith
 bindsym $mod+Shift+t layout toggle all
 
-# Make the current focus fullscreen
+# Fullscreen the focused window/container
 bindsym $mod+Shift+f fullscreen
-# Toggle window between tiling and floating mode
-bindsym $mod+Shift+Space floating toggle, resize set 800 800
-
-# Toggle sticky ("pin") on a container (must be floating to take effect)
-bindsym $mod+Shift+s sticky toggle
 
 # ============= UTILITY LAYER =============
 ## Application-launcher keybinds
