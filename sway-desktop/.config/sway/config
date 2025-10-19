@@ -178,7 +178,7 @@ include $subcfgs/colors.default
 ## HOST-SPECIFIC CONFIG
 ##  NOTE: must come before bar but after default color load so colors are applied correctly
 ###################################################################################################
-include $subcfgs/$(hostnamectl hostname).config
+include $subcfgs/"$(hostnamectl hostname).config"
 
 ###################################################################################################
 ## BAR
@@ -215,7 +215,7 @@ exec ~/.config/sway/idle.sh &
 exec_always ~/.config/sway/track_prev_focus &
 
 # host-specific autostart
-include $subcfgs/$(hostnamectl hostname)-autostart.config
+include $subcfgs/"$(hostnamectl hostname)-autostart.config"
 
 # default configs from system
 include /etc/sway/config.d/*

@@ -33,7 +33,7 @@ set $dm1pass ~/bin/hyprkit/fz1p
 bindsym $mod+Control+o $dm1pass
 
 # screenshots select
-set $screenclip "~/bin/grimsel"
+set $screenclip ~/bin/grimsel
 bindsym $mod+Control+p exec $screenclip
 
 # Dark/light mode switcher script
@@ -45,6 +45,6 @@ bindsym $mod+Control+v exec $ympv_url_menu
 bindsym $mod+Control+Shift+v exec $ympv_url_clip
 
 # Select windows from scratchpad with fuzzel menu
-set $scratchmenu "~/bin/dm-scratchmenu"
+set $scratchmenu ~/bin/dm-scratchmenu
 bindsym $mod+Control+Tab exec $scratchmenu
 
