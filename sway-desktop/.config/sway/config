@@ -166,7 +166,6 @@ bindsym $mod+Shift+f fullscreen
 ## Application-launcher keybinds
 include $subcfgs/control-layer-bindings
 
-
 ###################################################################################################
 ## VISUAL/THEMING
 ###################################################################################################
