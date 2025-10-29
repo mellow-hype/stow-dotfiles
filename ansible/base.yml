@@ -1,0 +1,34 @@
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: install baseline set of common tools
+    package:
+      state: present
+      name:
+        - build-essential
+        - bear
+        - gdb
+        - tmux
+        - vim
+        - git
+        - wget
+        - curl
+        - ripgrep
+        - fzf
+        - nmap
+        - clang-tools
+        - htop
+        - batcat
+        - jq
+        - newsboat
+
+  - name: install media tools
+    package:
+      state: present
+      name:
+        - moc
+        - mpv
+        - ffmpeg
+

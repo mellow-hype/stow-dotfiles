@@ -1,0 +1,16 @@
+- hosts: localhost
+  connection: local
+
+  tasks:
+  - name: install yubikey tools
+    package:
+      name:
+        - yubikey-personalization
+        - yubikey-manager
+        - fido2-tools
+        - gpg
+        - gnupg2
+        - gnupg-agent
+        - scdaemon
+        - pcscd
+

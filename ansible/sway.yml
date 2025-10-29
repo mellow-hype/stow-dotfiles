@@ -1,0 +1,51 @@
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: create sway config directories
+    file:
+      path: "{{ item.path }}"
+      state: directory
+      owner: "{{ item.owner }}"
+      group: "{{ item.group }}"
+    loop:
+      - { path: "/home/hyper/.config/sway", owner: "hyper", group: hyper }
+      - { path: "/home/hyper/.config/i3status", owner: "hyper", group: hyper }
+      - { path: "/home/hyper/.config/foot", owner: "hyper", group: hyper }
+      - { path: "/home/hyper/.config/fuzzel", owner: "hyper", group: hyper }
+      - { path: "/home/hyper/.config/kanshi", owner: "hyper", group: hyper }
+
+  - name: install base sway packages
+    package:
+      state: present
+      name:
+        - sway
+        - swaylock
+        - brightnessctl
+        - dunst
+        - dex
+        - i3status
+        - fuzzel
+        - foot
+        - suckless-tools
+        - kanshi
+        - gammastep
+        - pinentry-tty
+        - pinentry-gtk2
+        - grim
+        - slurp
+        - wev
+        - wl-clipboard
+        - wireplumber
+
+  - name: install fonts
+    package:
+      state: present
+      name:
+        - fonts-firacode
+        - fonts-terminus
+        - fonts-terminus-otb
+        - fonts-powerline
+        - fonts-font-awesome
+        - fonts-inconsolata
