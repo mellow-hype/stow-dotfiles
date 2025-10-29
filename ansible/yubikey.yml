@@ -1,9 +1,11 @@
 - hosts: localhost
   connection: local
+  become: true
 
   tasks:
   - name: install yubikey tools
     package:
+      state: present
       name:
         - yubikey-personalization
         - yubikey-manager

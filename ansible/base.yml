@@ -20,7 +20,7 @@
         - nmap
         - clang-tools
         - htop
-        - batcat
+        - bat
         - jq
         - newsboat
 
