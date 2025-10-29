@@ -1,29 +1,31 @@
+STOWARGS := --dotfiles -v 
 
 ifdef SIM
-  SIMARG := --simulate
-else
-  SIMARG :=
+  STOWARGS += --simulate
 endif
 
-.PHONY: tty tty_scripts
+.PHONY: tty tty_scripts doom
 
 all:
 	echo "sway_desktop|gui_scripts|tty_scripts|tty_configs"
 
+doom:
+	stow $(STOWARGS) -t $(HOME)/.config/doom doom
+
 tty:
-	stow $(SIMARG) -v -t $(HOME) tty
+	stow $(STOWARGS) -t $(HOME) tty
 
 sway_desktop:
 	mkdir -p $(HOME)/.config/qutebrowser && \
-		stow $(SIMARG) -v -t $(HOME) sway-desktop
+		stow $(STOWARGS) -t $(HOME) sway-desktop
 
 tty_scripts:
-	cd scripts && stow $(SIMARG) -v -t $(HOME)/bin tty-scripts
+	cd scripts && stow $(STOWARGS) -t $(HOME)/bin tty-scripts
 
 gui_scripts:
-	cd scripts/desktop-scripts && stow $(SIMARG) -v -t $(HOME)/bin sway media util
+	cd scripts/desktop-scripts && stow $(STOWARGS) -t $(HOME)/bin sway media util
 
 install_colors:
 	mkdir -p $(HOME)/.config/colors && \
-	stow $(SIMARG) -v -t $(HOME)/.config/colors colors
+	stow $(STOWARGS) -t $(HOME)/.config/colors colors
 
