@@ -41,14 +41,27 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
+(setq org-agenda-files '("~/core/org-notes/capture.org"
+                         "~/core/org-notes/tasks.org"
+                         "~/core/org-notes/research.org"
+                         ))
+
 ;; org-mode capture templates
 (setq org-capture-templates
-      ;; template for todo items
-    '(("t" "Todo" entry (file+headline (concat org-directory "/todo.org") "Taskbox")
+      '(
+        ;; template for todo items
+        ("t" "Task" entry (file+headline "~/core/org-notes/tasks.org" "Taskbox")
         "* TODO %?\n %i")
-      ;; template for journal entries
-      ("j" "Journal" entry (file+olp+datetree (concat org-directory "/journal.org"))
-      "* entry: %U\n %i"))
+        ;; research task
+        ("r" "Research Task" entry (file+headline "~/core/org-notes/research.org" "Taskbox")
+        "* TODO %?\n %i")
+        ;; idea entry
+        ("i" "Idea" entry (file "~/core/org-notes/capture.org")
+        "* IDEA: %?\n %i")
+        ;; template for journal entries
+        ("j" "Journal" entry (file+olp+datetree "~/core/org-notes/journal.org")
+        "* entry: %U\n %i")
+      )
 )
 
 ;;; EVIL-MODE STUFF
