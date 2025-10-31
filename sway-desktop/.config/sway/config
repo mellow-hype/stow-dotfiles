@@ -58,6 +58,8 @@ bindsym $mod+Return exec $term
 bindsym $mod+w exec $browser
 # qutebrowser
 bindsym $mod+q exec $mbrowser
+# emacs
+bindsym $mod+e exec emacsclient --create-frame
 
 # Start exec launcher (dmenu path exec)
 bindsym $mod+d exec $menu_exec
