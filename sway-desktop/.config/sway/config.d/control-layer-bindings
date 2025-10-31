@@ -29,7 +29,7 @@ set $sessman ~/.config/sway/sessionman.sh
 bindsym $mod+Control+Escape exec $sessman
 
 # 1password dmenu grabber
-set $dm1pass ~/bin/hyprkit/fz1p
+set $dm1pass ~/bin/fz1p
 bindsym $mod+Control+o $dm1pass
 
 # screenshots select
