@@ -32,33 +32,36 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+;;; LOAD HOST-SPECIFIC CONFIG
+;; do this before org-mode setup since this will define org-directory for use below
+(load-file (concat "~/.config/emacs/" (system-name) "-config.el"))
+
 ;;; ORG MODE
-;; org directory
-(setq org-directory "~/core/org-notes/")
 ;; default note to append to when capture is triggered
-(setq org-default-notes-file (concat org-directory "/capture.org"))
+(setq org-default-notes-file (concat org-directory "capture.org"))
+;; list of agenda files is stored in this file
+(setq org-agenda-files (concat org-directory "agenda-files"))
 ;; key binds for org stuff
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-(setq org-agenda-files '("~/core/org-notes/capture.org"
-                         "~/core/org-notes/tasks.org"
-                         "~/core/org-notes/research.org"
-                         ))
+;;; org-mode hooks
+;; always toggle line wrapping mode for org files
+(add-hook 'org-mode-hook
+          (lambda ()
+            (toggle-truncate-lines nil)
+            (setq word-wrap t)
+            ))
 
 ;; org-mode capture templates
 (setq org-capture-templates
       '(
-        ;; template for todo items
         ("t" "Task" entry (file+headline "~/core/org-notes/tasks.org" "Taskbox")
         "* TODO %?\n %i")
-        ;; research task
         ("r" "Research Task" entry (file+headline "~/core/org-notes/research.org" "Taskbox")
         "* TODO %?\n %i")
-        ;; idea entry
         ("i" "Idea" entry (file "~/core/org-notes/capture.org")
         "* IDEA: %?\n %i")
-        ;; template for journal entries
         ("j" "Journal" entry (file+olp+datetree "~/core/org-notes/journal.org")
         "* entry: %U\n %i")
       )
@@ -107,41 +110,6 @@
   :config
   (global-evil-surround-mode 1))
 
-;;; OBSIDIAN SETUP
-;; load+configure obsidian.el
-(use-package obsidian
-    :demand t
-    :config
-    (global-obsidian-mode t) ; enable obsidian mode
-    (obsidian-backlinks-mode nil) ; disable the backlinks panel by default
-    :bind (:map obsidian-mode-map
-                ;; create new
-                ("C-c C-n" . obsidian-capture) ;; create new note in inbox directory
-                ("C-c C-l" . obsidian-insert-link) ;; insert link to another note with menu
-                ("C-c C-o" . obsidian-jump) ;; like obsidian's command palette to jump to note
-                ("C-c C-g" . obsidian-follow-link-at-point)
-                ("C-c C-b" . obsidian-backlinks-mode) ;; toggle backlinks panel
-                ("C-c S-o" . obsidian-change-vault) ;; switch active vault
-                )
-    :custom
-    (obsidian-directory "~/core/HACKVAULT.Obidian")
-    (obsidian-inbox-directory "10 Inbox")
-    (obsidian-daily-notes-directory "12 Daily Notes")
-    (obsidian-templates-directory "000.META/Templates")
-    (obsidian-links-use-vault-path t) ; use vault paths in links vs. just the name
-    (obsidian-create-unfound-files-in-inbox t) ; create unfound linked files in inbox
-    (obsidian-backlinks-panel-width 80)
-)
-
-;; xeft provides a search-as-you-type interface for searching the notes directory
-(use-package xeft
-  :after obsidian
-  :bind ((:map obsidian-mode-map (("C-c C-f" . xeft))))
-  :custom
-  (xeft-directory obsidian-directory)
-  (xeft-recursive t)
-  (xeft-file-filter #'obsidian-file-p)
-  (xeft-title-function #'obsidian-file-title-function))
 
 ;; improved search and navigation features w/ consult
 (use-package consult
@@ -198,8 +166,6 @@
 
 ;;; KEY BINDS
 ;; Global key binds
-(global-set-key (kbd "C-c M-o") 'global-obsidian-mode) ;; toggle obsidian-mode
-(global-set-key (kbd "C-c O") 'obsidian-jump) ;; toggle obsidian-mode
 
 ;; evil leader binding for file finder
 (evil-define-key 'normal 'global (kbd "<leader>cf") 'consult-find)
