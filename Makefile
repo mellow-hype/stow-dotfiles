@@ -4,13 +4,13 @@ ifdef SIM
   STOWARGS += --simulate
 endif
 
-.PHONY: tty tty_scripts doom
+.PHONY: tty tty_scripts sway_desktop emacs
 
 all:
 	echo "sway_desktop|gui_scripts|tty_scripts|tty_configs"
 
-doom:
-	stow $(STOWARGS) -t $(HOME)/.config/doom doom
+emacs:
+	stow $(STOWARGS) -t $(HOME) emacs
 
 tty:
 	stow $(STOWARGS) -t $(HOME) tty
