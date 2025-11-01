@@ -32,9 +32,11 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+;;; LOAD HOST-SPECIFIC CONFIG
+;; do this before org-mode setup since this will define org-directory for use below
+(load-file (concat "~/.config/emacs/" (system-name) "-config.el"))
+
 ;;; ORG MODE
-;; org directory
-(setq org-directory "~/core/org-notes/")
 ;; default note to append to when capture is triggered
 (setq org-default-notes-file (concat org-directory "/capture.org"))
 ;; key binds for org stuff
