@@ -41,6 +41,13 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
+;; always toggle line wrapping mode for org files
+(add-hook 'org-mode-hook
+          (lambda ()
+            (toggle-truncate-lines nil)
+            (setq word-wrap t)
+            ))
+
 ;; org-mode capture templates
 (setq org-capture-templates
       ;; template for todo items
