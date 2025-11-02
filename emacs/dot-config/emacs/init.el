@@ -39,16 +39,42 @@
 ;;; ORG MODE
 ;; default note to append to when capture is triggered
 (setq org-default-notes-file (concat org-directory "/capture.org"))
-;; key binds for org stuff
+(setq my-org-tasks-file (concat org-directory "/tasks.org"))
+(setq my-org-journal-file (concat org-directory "/journal.org"))
+
+;; GLOBAL key binds for org stuff (apply even when not in org-mode)
+(global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-;; always toggle line wrapping mode for org files
-(add-hook 'org-mode-hook
-          (lambda ()
-            (toggle-truncate-lines nil)
-            (setq word-wrap t)
-            ))
+;; binding for custom link inserter
+(define-key org-mode-map (kbd "C-c k") 'hypr-insert-org-link)
+
+;; custom function to insert org-mode-formatted link
+(defun hypr-insert-org-link (url)
+  "URL to insert for link."
+  (interactive "sInput URL string: ")
+  (let ((link-label (read-string "Link label: ")))
+    (insert (format "[[%s][%s]]" url link-label))))
+
+;; custom function binding to open bookmarked org files
+(global-set-key (kbd "C-c f") 'custom-bookmarks)
+
+;; custom function to quickly open some org files
+(defun custom-bookmarks (choice)
+  "Choices for bookmarks file to open"
+  (interactive "open [c]apture.org | [t]asks.org | [j]ournal.org")
+  (cond
+   ((eq choice ?c)
+    (find-file org-default-notes-file)
+      (message "Opened: %s" (buffer-name)))
+   ((eq choice ?t)
+    (find-file my-org-tasks-file)
+      (message "Opened: %s" (buffer-name)))
+   ((eq choice ?j)
+    (find-file my-org-journal-file)
+    (message "Opened: %s" (buffer-name)))
+   (t (message "Quit"))))
 
 ;; org-mode capture templates
 (setq org-capture-templates
@@ -59,6 +85,15 @@
       ("j" "Journal" entry (file+olp+datetree (concat org-directory "/journal.org"))
       "* entry: %U\n %i"))
 )
+
+;;; Reconfigured auto-save and backup files to not be created in local dirs
+;; backup files
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+;; auto-save-mode doesn't create the path automatically!
+(make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
+(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+    auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+
 
 ;;; EVIL-MODE STUFF
 ;; load+configure evil-mode
@@ -88,8 +123,8 @@
     (evil-define-key 'normal 'global (kbd "<leader>w") 'save-buffer)
     (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
     ;; buffer cycling
-    (evil-define-key 'normal 'global (kbd "<leader>bb") 'previous-buffer)
-    (evil-define-key 'normal 'global (kbd "<leader>bn") 'next-buffer))
+    (evil-define-key 'normal 'global (kbd "<leader>b") 'previous-buffer)
+    (evil-define-key 'normal 'global (kbd "<leader>n") 'next-buffer))
 
 ;; commentary clone
 (use-package evil-commentary
@@ -155,12 +190,18 @@
 ;; tab settings
 (setq-default indent-tabs-mode nil) ; insert spaces instead of real tab
 (setq-default tab-width 4) ; default width is 4
+(setq tab-stop-list nil)
 
-;;; KEY BINDS
-;; Global key binds
-(global-set-key (kbd "C-c M-o") 'global-obsidian-mode) ;; toggle obsidian-mode
-(global-set-key (kbd "C-c O") 'obsidian-jump) ;; toggle obsidian-mode
+;; always toggle line wrapping mode for org files
+(add-hook 'org-mode-hook
+          (lambda ()
+            (toggle-truncate-lines -1) ;; wrap long lines intead of truncating
+            (word-wrap-whitespace-mode nil) ; allow wrap on whitespace
+            (setq word-wrap t) ;; word wrap mode
+            (setq tab-width 2) ;; set default tab width for org mode to 2
+            ))
 
+;;; GLOBAL KEY BINDS
 ;; evil leader binding for file finder
 (evil-define-key 'normal 'global (kbd "<leader>cf") 'consult-find)
 (evil-define-key 'normal 'global (kbd "<leader>fr") 'consult-recent-file)
