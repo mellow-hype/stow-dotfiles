@@ -41,6 +41,7 @@
 (setq org-default-notes-file (concat org-directory "/capture.org"))
 (setq my-org-tasks-file (concat org-directory "/tasks.org"))
 (setq my-org-journal-file (concat org-directory "/journal.org"))
+(setq org-startup-indented 1)
 
 ;; GLOBAL key binds for org stuff (apply even when not in org-mode)
 (global-set-key (kbd "C-c l") #'org-store-link)
