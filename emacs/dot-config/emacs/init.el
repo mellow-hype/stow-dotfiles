@@ -36,11 +36,14 @@
 ;; do this before org-mode setup since this will define org-directory for use below
 (load-file (concat "~/.config/emacs/" (system-name) "-config.el"))
 
+;;; ============================================================================ ;;
 ;;; ORG MODE
 ;; default note to append to when capture is triggered
 (setq org-default-notes-file (concat org-directory "/capture.org"))
+;; custom variables for other common org files
 (setq my-org-tasks-file (concat org-directory "/tasks.org"))
 (setq my-org-journal-file (concat org-directory "/journal.org"))
+;; always start org mode in indented mode
 (setq org-startup-indented 1)
 
 ;; GLOBAL key binds for org stuff (apply even when not in org-mode)
@@ -48,23 +51,20 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-;; binding for custom link inserter
-(define-key org-mode-map (kbd "C-c k") 'hypr-insert-org-link)
-
 ;; custom function to insert org-mode-formatted link
-(defun hypr-insert-org-link (url)
+(defun hypr-org-insert-url (url)
   "URL to insert for link."
   (interactive "sInput URL string: ")
   (let ((link-label (read-string "Link label: ")))
     (insert (format "[[%s][%s]]" url link-label))))
 
 ;; custom function binding to open bookmarked org files
-(global-set-key (kbd "C-c f") 'custom-bookmarks)
+(global-set-key (kbd "C-c f") 'hypr-org-jump-files)
 
 ;; custom function to quickly open some org files
-(defun custom-bookmarks (choice)
+(defun hypr-org-jump-files (choice)
   "Choices for bookmarks file to open"
-  (interactive "open [c]apture.org | [t]asks.org | [j]ournal.org")
+  (interactive "cOpen [c]apture.org | [t]asks.org | [j]ournal.org")
   (cond
    ((eq choice ?c)
     (find-file org-default-notes-file)
@@ -79,13 +79,13 @@
 
 ;; org-mode capture templates
 (setq org-capture-templates
+      ;; TODO: add template for 'quick-note' to insert into capture file under "Notes" node
       ;; template for todo items
-    '(("t" "Todo" entry (file+headline (concat org-directory "/todo.org") "Taskbox")
+    '(("t" "Todo" entry (file+headline my-org-tasks-file "Taskbox")
         "* TODO %?\n %i")
       ;; template for journal entries
-      ("j" "Journal" entry (file+olp+datetree (concat org-directory "/journal.org"))
-      "* entry: %U\n %i"))
-)
+      ("j" "Journal" entry (file+olp+datetree my-org-journal-file)
+      "* entry: %U\n %i")))
 
 ;;; Reconfigured auto-save and backup files to not be created in local dirs
 ;; backup files
@@ -95,37 +95,40 @@
 (setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
     auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
-
+;;; ============================================================================ ;;
 ;;; EVIL-MODE STUFF
-;; load+configure evil-mode
+;; define a few config variables before loading (won't cause errors)
 (setq evil-want-integration t)
 (setq evil-want-keybinding nil)
+;; load+configure evil-mode
 (use-package evil
-    :demand t ;; install the evil package if not installed
+    :demand t
     :bind (("<escape>" . keyboard-escape-quit))
     :init ;; set some configuration options before loading
     (setq evil-want-C-u-scroll t)
-    :config ;; set evil options after loading
+    :config ;; set configs after load
     (evil-mode 1)
-    ;; set the leader key to <space>
     (evil-set-leader 'motion (kbd "SPC")))
+
 
 ;; load+enable evil-collection (add vim bindings everywhere)
 (use-package evil-collection
     :after evil
     :config
     (evil-collection-init)
-    ; make tab work as expected in insert mode
+    ;; make redo/undo work as expected
+    (evil-set-undo-system 'undo-redo)
+    ;; special bindings for insert-mode
     (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
-    ;; window management
+    ;; leader bindings
     (evil-define-key 'normal 'global (kbd "<leader>vs") 'evil-window-vsplit)
-    (evil-define-key 'normal 'global (kbd "<leader>vd") 'evil-window-split)
-    ;; save+kill buffer
-    (evil-define-key 'normal 'global (kbd "<leader>w") 'save-buffer)
+    (evil-define-key 'normal 'global (kbd "<leader>vh") 'evil-window-split)
+    (evil-define-key 'normal 'global (kbd "<leader>s") 'save-buffer)
     (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
-    ;; buffer cycling
     (evil-define-key 'normal 'global (kbd "<leader>b") 'previous-buffer)
-    (evil-define-key 'normal 'global (kbd "<leader>n") 'next-buffer))
+    (evil-define-key 'normal 'global (kbd "<leader>n") 'next-buffer)
+    ;; (evil-define-key 'insert 'global (kbd "S-C-v") 'next-buffer)
+    )
 
 ;; commentary clone
 (use-package evil-commentary
@@ -139,12 +142,15 @@
   :config
   (global-evil-surround-mode 1))
 
+;;; ============================================================================ ;;
+;;; NAVIGATION / TELESCOPE / MENUS
 ;; improved search and navigation features w/ consult
 (use-package consult
   :init
   (advice-add #'register-preview :override #'consult-register-window)
   (setq register-preview-delay 0.5)
   :config
+  (recentf-mode 1)
   (dolist (src consult-buffer-sources)
   (unless (eq src 'consult--source-buffer)
       (set src (plist-put (symbol-value src) :hidden t))))
@@ -154,8 +160,7 @@
    consult-bookmark consult-recent-file consult-xref
    consult--source-bookmark consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
-   :preview-key '(:debounce 0.4 any)
-   ))
+   :preview-key '(:debounce 0.4 any)))
 
 ;; improved autocomplete panel w/ vertico
 (use-package vertico
@@ -169,6 +174,7 @@
     :init
     (marginalia-mode))
 
+;;; ============================================================================ ;;
 ;;; LOOK AND FEEL
 ;; which-key package
 ;; set theme
@@ -183,34 +189,43 @@
 (menu-bar-mode -1)
 (tooltip-mode -1)
 (setq scroll-bar-mode nil)
+
 ;; line numbers
 (setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode t)
+;;(global-display-line-numbers-mode t)
+(use-package display-line-numbers
+    :defer
+    :hook
+    (prog-mode . display-line-numbers-mode)
+    (markdown-mode . display-line-numbers-mode)
+    (conf-mode . display-line-numbers-mode))
 
+;; ============================================================================ ;;
 ;;; BEHAVIOR
 ;; tab settings
 (setq-default indent-tabs-mode nil) ; insert spaces instead of real tab
 (setq-default tab-width 4) ; default width is 4
-(setq tab-stop-list nil)
 
 ;; always toggle line wrapping mode for org files
-(add-hook 'org-mode-hook
-          (lambda ()
-            (toggle-truncate-lines -1) ;; wrap long lines intead of truncating
-            (word-wrap-whitespace-mode nil) ; allow wrap on whitespace
-            (setq word-wrap t) ;; word wrap mode
-            (setq tab-width 2) ;; set default tab width for org mode to 2
-            ))
+(add-hook 'org-mode-hook (lambda ()
+    (toggle-truncate-lines) ;; wrap long lines intead of truncating
+    (setq-local display-line-numbers-type 'relative)
+    (word-wrap-whitespace-mode nil)))
 
-;;; GLOBAL KEY BINDS
-;; evil leader binding for file finder
-(evil-define-key 'normal 'global (kbd "<leader>cf") 'consult-find)
+;;; ============================================================================ ;;
+;;; CUSTOM KEY BINDS
+;; common leader- based bindings to simulate how things were set up in vim
+(evil-define-key 'normal 'global (kbd "<leader>w") 'evil-window-map)
 (evil-define-key 'normal 'global (kbd "<leader>fr") 'consult-recent-file)
-(evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
-;; evil leader binding for file ripgrep
 (evil-define-key 'normal 'global (kbd "<leader>fs") 'consult-ripgrep)
-;; leader bind for buffer search
-(evil-define-key 'normal 'global (kbd "<leader>fb") 'consult-buffer)
+(evil-define-key 'normal 'global (kbd "<leader>fl") 'consult-line)
+(evil-define-key 'normal 'global (kbd "<leader>fd") 'consult-buffer)
+(evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
+ 
+;;; org-mode keybinds
+(evil-define-key 'normal 'global (kbd "C-c k") 'hypr-org-insert-url)
+(evil-define-key 'normal 'global (kbd "C-c j") 'org-insert-structure-template)
 
 ;; init evil-collection at global scope
 (evil-collection-init)
+
