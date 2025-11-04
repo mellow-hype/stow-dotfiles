@@ -16,6 +16,14 @@
  ;; If there is more than one, they won't work right.
  )
 
+;;; Reconfigured auto-save and backup files to not be created in local dirs
+;; backup files
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+;; auto-save-mode doesn't create the path automatically!
+(make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
+(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+    auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+
 ;;; PACKAGE MANAGER INIT
 (require 'package)
 (add-to-list 'package-archives
@@ -36,30 +44,29 @@
 ;; do this before org-mode setup since this will define org-directory for use below
 (load-file (concat "~/.config/emacs/" (system-name) "-config.el"))
 
-;;; ============================================================================ ;;
+;;; ============================================================================
 ;;; ORG MODE
+;; file used to define which files to use for the agenda
+(setq org-agenda-files (concat org-directory "/agenda-files"))
 ;; default note to append to when capture is triggered
 (setq org-default-notes-file (concat org-directory "/capture.org"))
-;; custom variables for other common org files
-(setq my-org-tasks-file (concat org-directory "/tasks.org"))
-(setq my-org-journal-file (concat org-directory "/journal.org"))
-;; always start org mode in indented mode
-(setq org-startup-indented 1)
+(setq my-org-tasks-file (concat org-directory "/tasks.org")) ;; custom: org tasks file
+(setq my-org-journal-file (concat org-directory "/journal.org")) ;; custom: org journal file
+(setq org-startup-indented 1) ;; always start org mode in indented mode
 
 ;; GLOBAL key binds for org stuff (apply even when not in org-mode)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
-
-;; custom function to insert org-mode-formatted link
-(defun hypr-org-insert-url (url)
-  "URL to insert for link."
-  (interactive "sInput URL string: ")
-  (let ((link-label (read-string "Link label: ")))
-    (insert (format "[[%s][%s]]" url link-label))))
-
 ;; custom function binding to open bookmarked org files
 (global-set-key (kbd "C-c f") 'hypr-org-jump-files)
+
+;; autoinsert header for org files
+(define-skeleton my-org-file-frontmatter
+    "Autoheader for new org files."
+    "Title: "
+    "#+TITLE: " str \n
+    "#+DATE: " '(call-interactively 'org-time-stamp) "\n\n")
 
 ;; custom function to quickly open some org files
 (defun hypr-org-jump-files (choice)
@@ -87,19 +94,35 @@
       ("j" "Journal" entry (file+olp+datetree my-org-journal-file)
       "* entry: %U\n %i")))
 
-;;; Reconfigured auto-save and backup files to not be created in local dirs
-;; backup files
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
-;; auto-save-mode doesn't create the path automatically!
-(make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
-(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-    auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+;; handle settings which can only be set once we know org has been loaded
+(use-package org
+  :demand t
+  :after consult
+  :mode (("\\.org$" . org-mode))
+  :init
+  (setq org-startup-indented 1) ;; always start org mode in indented mode
+  :config
+  (define-key org-mode-map (kbd "M-i b") 'org-insert-structure-template)
+  (define-key org-mode-map (kbd "M-g g") 'consult-org-heading))
 
-;;; ============================================================================ ;;
+
+;;; ============================================================================
+;;; AUTO-INSERT MODE CONFIG
+;; configure autoinsert
+(use-package autoinsert
+  :config
+  (setq auto-insert-query nil) ;; disable the default auto-inserts 
+  (auto-insert-mode 1) ;; enable auto-insert mode globally
+  (setq auto-insert-alist nil) ;; remove this to return defaults
+  (add-hook 'find-file-hook 'auto-insert) ;; auto-insert template when new files are created
+  (add-to-list 'auto-insert-alist '("\\.org\\'" . my-org-file-frontmatter)))
+
+;;; ============================================================================
 ;;; EVIL-MODE STUFF
 ;; define a few config variables before loading (won't cause errors)
 (setq evil-want-integration t)
 (setq evil-want-keybinding nil)
+
 ;; load+configure evil-mode
 (use-package evil
     :demand t
@@ -110,7 +133,6 @@
     (evil-mode 1)
     (evil-set-leader 'motion (kbd "SPC")))
 
-
 ;; load+enable evil-collection (add vim bindings everywhere)
 (use-package evil-collection
     :after evil
@@ -120,29 +142,32 @@
     (evil-set-undo-system 'undo-redo)
     ;; special bindings for insert-mode
     (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
-    ;; leader bindings
+    ;; active window-map mode with leader bind
+    (evil-define-key 'normal 'global (kbd "<leader>w") 'evil-window-map)
+    ;; leader bindings: split management
     (evil-define-key 'normal 'global (kbd "<leader>vs") 'evil-window-vsplit)
     (evil-define-key 'normal 'global (kbd "<leader>vh") 'evil-window-split)
+    ;; leader bindings: buffer management
     (evil-define-key 'normal 'global (kbd "<leader>s") 'save-buffer)
     (evil-define-key 'normal 'global (kbd "<leader>q") 'kill-buffer)
     (evil-define-key 'normal 'global (kbd "<leader>b") 'previous-buffer)
     (evil-define-key 'normal 'global (kbd "<leader>n") 'next-buffer)
-    ;; (evil-define-key 'insert 'global (kbd "S-C-v") 'next-buffer)
+    (evil-define-key 'insert 'global (kbd "C-S-v") 'next-buffer)
     )
 
-;; commentary clone
+;; evil-commentary: commentary clone
 (use-package evil-commentary
   :after evil
   :config
   (evil-commentary-mode))
 
-;; surround clone
+;; evil-surround: vim-surround clone
 (use-package evil-surround
   :after evil
   :config
   (global-evil-surround-mode 1))
 
-;;; ============================================================================ ;;
+;;; ============================================================================
 ;;; NAVIGATION / TELESCOPE / MENUS
 ;; improved search and navigation features w/ consult
 (use-package consult
@@ -150,16 +175,21 @@
   (advice-add #'register-preview :override #'consult-register-window)
   (setq register-preview-delay 0.5)
   :config
-  (recentf-mode 1)
+  (recentf-mode 1) ;; enable for recent-file listing
   (dolist (src consult-buffer-sources)
-  (unless (eq src 'consult--source-buffer)
+    ;; iterate though the list of consult buffer sources and set the :hidden flag
+    ;; on everything that *isn't* a source buffer.
+    (unless (eq src 'consult--source-buffer)
       (set src (plist-put (symbol-value src) :hidden t))))
+  (consult-customize consult-theme :preview-key '(:debounce 0.3 any))
   (consult-customize
-   consult-theme :preview-key '(:debounce 0.2 any)
-   consult-ripgrep consult-git-grep consult-grep consult-man
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-file-register
+   consult-ripgrep consult-git-grep consult-grep
+   :preview-key '(:debounce 0.2 any))
+  (consult-customize
+   consult-man consult-bookmark
+   consult-xref consult-recent-file
    consult--source-recent-file consult--source-project-recent-file
+   consult--source-bookmark consult--source-file-register
    :preview-key '(:debounce 0.4 any)))
 
 ;; improved autocomplete panel w/ vertico
@@ -174,7 +204,7 @@
     :init
     (marginalia-mode))
 
-;;; ============================================================================ ;;
+;;; ============================================================================
 ;;; LOOK AND FEEL
 ;; which-key package
 ;; set theme
@@ -200,31 +230,29 @@
     (markdown-mode . display-line-numbers-mode)
     (conf-mode . display-line-numbers-mode))
 
-;; ============================================================================ ;;
+;;; ============================================================================
 ;;; BEHAVIOR
 ;; tab settings
 (setq-default indent-tabs-mode nil) ; insert spaces instead of real tab
-(setq-default tab-width 4) ; default width is 4
+(setq tab-stop-list (number-sequence 0 200 4)) ; Sets tab stops every 4 columns up to 200
 
 ;; always toggle line wrapping mode for org files
 (add-hook 'org-mode-hook (lambda ()
     (toggle-truncate-lines) ;; wrap long lines intead of truncating
-    (setq-local display-line-numbers-type 'relative)
     (word-wrap-whitespace-mode nil)))
 
-;;; ============================================================================ ;;
+;;; ============================================================================
 ;;; CUSTOM KEY BINDS
 ;; common leader- based bindings to simulate how things were set up in vim
-(evil-define-key 'normal 'global (kbd "<leader>w") 'evil-window-map)
 (evil-define-key 'normal 'global (kbd "<leader>fr") 'consult-recent-file)
 (evil-define-key 'normal 'global (kbd "<leader>fs") 'consult-ripgrep)
 (evil-define-key 'normal 'global (kbd "<leader>fl") 'consult-line)
 (evil-define-key 'normal 'global (kbd "<leader>fd") 'consult-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
- 
-;;; org-mode keybinds
-(evil-define-key 'normal 'global (kbd "C-c k") 'hypr-org-insert-url)
-(evil-define-key 'normal 'global (kbd "C-c j") 'org-insert-structure-template)
+
+;; help/documentation search
+(evil-define-key 'normal 'global (kbd "<leader>mi") 'consult-info)
+(evil-define-key 'normal 'global (kbd "<leader>mm") 'consult-man)
 
 ;; init evil-collection at global scope
 (evil-collection-init)
