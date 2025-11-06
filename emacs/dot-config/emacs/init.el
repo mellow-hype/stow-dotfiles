@@ -6,9 +6,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("972f792651d32b0506481b9e87b2fbc9b732ae9da2527562668c6e7d149fefda"
+   '("e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
+     "972f792651d32b0506481b9e87b2fbc9b732ae9da2527562668c6e7d149fefda"
      default))
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(consult doom-modeline doom-themes evil-collection evil-commentary
+             evil-surround gruvbox-theme marginalia obsidian vertico
+             xeft zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -206,7 +210,30 @@
 
 ;;; ============================================================================
 ;;; LOOK AND FEEL
-;; which-key package
+;; doom modeline to get a pretty modeline without much work (and without full Doom)
+(use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
+
+;; doom themes for more niceness without full doom
+(use-package doom-themes
+    :ensure t
+    :custom
+    ;; Global settings (defaults)
+    (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+    (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    ;; for treemacs users
+    (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+    :config
+    (load-theme 'doom-zenburn t)
+  
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Enable custom neotree theme (nerd-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
+
 ;; set theme
 (use-package zenburn-theme)
 (use-package gruvbox-theme)
