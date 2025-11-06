@@ -106,7 +106,12 @@ alias tml="tmux ls"
 alias tma="tmux attach -t"
 alias tmn="tmux new -s"
 
+# misc
 alias c="clear"
+
+# override default apps
+alias vim="nvim"
+alias cat="batcat"
 
 # import other aliases
 ALIAS_FILE="$HOME/.config/aliases"

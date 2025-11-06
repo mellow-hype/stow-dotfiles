@@ -31,7 +31,7 @@ return require('packer').startup(function(use)
 
   -- dev plugins
   use 'dense-analysis/ale'
-  use 'neovim/nvim-lspconfig'
+  -- use 'neovim/nvim-lspconfig'
 
   -- plugins that only work on neovim versions above 0.7
   if vim.v.version >= 700 then
