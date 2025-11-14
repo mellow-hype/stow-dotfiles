@@ -17,4 +17,5 @@ swaymsg -m -t subscribe '["window"]' | \
     # when we read a $new_focus,set a mark on the previously focused container
     swaymsg "[con_id=${prev_focus}] mark --add _prev" &>/dev/null
     prev_focus=$new_focus
+    sleep 1
   done

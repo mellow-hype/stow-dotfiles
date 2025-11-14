@@ -105,7 +105,7 @@ c.tabs.show = 'multiple'
 ## Type: Dict
 c.url.searchengines = {
     'DEFAULT': 'https://duckduckgo.com/?q=g!+{}',
-    'yt': 'https://youtube.com/results?search_query={}',
+    'yt': 'https://www.youtube.com/results?search_query={}',
 }
 
 
@@ -121,7 +121,7 @@ config.bind(",v", "hint links spawn mpv --profile=ytv --wayland-app-id=ytv {hint
 config.bind(",t", "config-cycle tabs.position top left")
 
 # "minimize" vertical tab width
-config.bind(",m", "config-cycle tabs.width 10% 3%")
+config.bind(",m", "config-cycle tabs.width 18% 3%")
 
 # toggle status bar viz
 config.bind(",ss", "config-cycle statusbar.show always never")

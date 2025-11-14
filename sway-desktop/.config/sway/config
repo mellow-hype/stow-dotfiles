@@ -19,7 +19,7 @@ set $right l
 
 ### Wallpaper
 # output * bg /home/hyper/.config/faces.png fill
-output * bg /home/hyper/media/images/wallpapers/robot-repair.jpg fill
+output * bg /home/hyper/.config/wallpapers/pixel-warm-gruv.jpg fill
 
 ### Input configuration
 input "type:keyboard" {

@@ -15,9 +15,9 @@ settings:
   content.user_stylesheets:
     global: gruvbox-css/src/gruvbox-light.css
   statusbar.show:
-    global: always
+    global: never
   tabs.position:
-    global: top
+    global: left
   tabs.show:
     global: always
   tabs.width:
