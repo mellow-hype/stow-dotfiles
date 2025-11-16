@@ -11,11 +11,9 @@ all:
 
 tty:
 	stow --no-folding $(STOW_ARGS) -t $(HOME) tty
-	make -C scripts/ tty
 
 sway_desktop:
 	stow --no-folding $(STOW_ARGS) -t $(HOME) sway-desktop
-	make -C scripts/ gui
 
 tty_scripts:
 	make -C scripts/ tty
