@@ -4,6 +4,7 @@ set $default_blue #5e8d87
 # "primary color" for theming; this is  really the only color that should be adjusted; everything
 # else is pretty well balanced/neutral (for inactive windows, etc)
 set $green          #9faa36
+set $yellow         #fcba03
 
 # other useful colors
 set $gray_dark      #242322
@@ -11,7 +12,7 @@ set $red            #fb4934
 set $white          #ffffff
 
 # highlight/primary color
-set $cl_high $green
+set $cl_high $yellow
 # urgent
 set $cl_urge $red
 # default bg

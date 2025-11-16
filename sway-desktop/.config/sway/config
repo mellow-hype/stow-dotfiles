@@ -18,13 +18,14 @@ set $right l
 
 
 ### Wallpaper
-# output * bg /home/hyper/.config/faces.png fill
-output * bg /home/hyper/media/images/wallpapers/robot-repair.jpg fill
+output * bg /home/hyper/.config/wallpapers/yellow-cyber-bright.png fill
 
 ### Input configuration
 input "type:keyboard" {
     xkb_options caps:super
 }
+
+input "type:touchpad" { tap enabled }
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -58,8 +59,6 @@ bindsym $mod+Return exec $term
 bindsym $mod+w exec $browser
 # qutebrowser
 bindsym $mod+q exec $mbrowser
-# emacs
-bindsym $mod+e exec emacsclient --create-frame
 
 # Start exec launcher (dmenu path exec)
 bindsym $mod+d exec $menu_exec
