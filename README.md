@@ -1,33 +1,36 @@
-# dotfiles managed w/ stow
+# dotfiles w/ stow
+
+## clone the repo
 
 ```
-git clone <this-repo> ~/.stow-dotfiles
+git clone --recursive <this-repo> ~/.stow-dotfiles
 ```
 
-## basic install of tty dotfiles (nvim, zshrc, tmux)
+## install basic tty dotfiles (nvim, zshrc, tmux)
 
-```
-cd ~/.stow-dotfiles
-stow -t $HOME tty-base/.
+```sh
+# install configs for common CLI tools: zsh, tmux, nvim, etc.
+make tty
+
+# install CLI-based scripts
+make tty_scripts
 ```
 
-## sway desktop config files
+## common GUI
+
+Config files for common GUI applications
+
+```sh
+make desktop
+make gui_scripts
+```
+
+## sway desktop profile
 
 Dependencies: `sway, i3status, dunst, fuzzel, foot, gammastep, kanshi, swaylock`
 
 ```sh
-cd ~/.stow-dotfiles
-stow -t $HOME sway-desktop/.
+make sway_desktop
+make gui_scripts
 ```
 
-## scripts
-
-```sh
-# for tty-only scripts
-cd ~/.stow-dotfiles/scripts
-stow -t $HOME/bin tty-scripts
-
-# for gui scripts
-cd ~/.stow-dotfiles/scripts/desktop-scripts
-stow -t $HOME/bin -S media sway util
-```
