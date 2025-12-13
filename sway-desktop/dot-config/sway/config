@@ -17,15 +17,10 @@ set $up k
 set $right l
 
 
-### Wallpaper
-output * bg /home/hyper/.config/wallpapers/yellow-cyber-bright.png fill
-
 ### Input configuration
 input "type:keyboard" {
     xkb_options caps:super
 }
-
-input "type:touchpad" { tap enabled }
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
