@@ -1,30 +1,29 @@
 STOW_ARGS := --dotfiles -v
-HOSTNAME := $(hostnamectl hostname)
 
 ifdef SIM
 STOW_ARGS += --simulate
 endif
 
 all:
-	echo "sway_desktop|gui_scripts|tty_scripts|tty_configs"
+	echo "targets: tty|sway_desktop|gui_scripts|tty_scripts"
 
 .PHONY: tty sway_desktop tty_scripts gui_scripts emacs
 
 tty:
-	stow $(STOW_ARGS) -t $(HOME) tty
-
-emacs:
-	stow $(STOW_ARGS) -t $(HOME) emacs
+	stow --no-folding $(STOW_ARGS) -t $(HOME) tty
 
 sway_desktop:
-	mkdir -p $(HOME)/.config/qutebrowser && stow $(STOW_ARGS) -t $(HOME) sway-desktop
+	stow --no-folding $(STOW_ARGS) -t $(HOME) sway-desktop
 
 tty_scripts:
-	cd scripts && stow $(STOW_ARGS) -t $(HOME)/bin tty-scripts
+	make -C scripts/ tty
 
 gui_scripts:
-	cd scripts && stow $(STOW_ARGS) -t $(HOME)/bin -S util media sway
+	make -C scripts/ gui
 
 install_colors:
-	mkdir -p $(HOME)/.config/colors && stow -v -t $(HOME)/.config/colors colors
+	mkdir -p $(HOME)/.config/colors && stow $(STOW_ARGS) -t $(HOME)/.config/colors colors
+
+emacs:
+	stow  $(STOW_ARGS) -t $(HOME) emacs
 

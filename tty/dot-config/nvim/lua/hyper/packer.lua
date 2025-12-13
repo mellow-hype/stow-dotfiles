@@ -33,16 +33,7 @@ return require('packer').startup(function(use)
   use 'dense-analysis/ale'
   use 'neovim/nvim-lspconfig'
 
-  -- plugins that only work on neovim versions above 0.7
-  if vim.v.version >= 700 then
-      -- telescope fuzzy finder/file manager
-      use {
-          'nvim-telescope/telescope.nvim', tag = '0.1.4',
-          requires = { {'nvim-lua/plenary.nvim'} }
-      }
-      use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  end
-
+  use "ibhagwan/fzf-lua"
 
   -- this needs to come at the end of all other packages
   if packer_bootstrap then

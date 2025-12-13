@@ -17,10 +17,6 @@ set $up k
 set $right l
 
 
-### Wallpaper
-# output * bg /home/hyper/.config/faces.png fill
-output * bg /home/hyper/media/images/wallpapers/robot-repair.jpg fill
-
 ### Input configuration
 input "type:keyboard" {
     xkb_options caps:super
@@ -58,8 +54,6 @@ bindsym $mod+Return exec $term
 bindsym $mod+w exec $browser
 # qutebrowser
 bindsym $mod+q exec $mbrowser
-# emacs
-bindsym $mod+e exec emacsclient --create-frame
 
 # Start exec launcher (dmenu path exec)
 bindsym $mod+d exec $menu_exec
