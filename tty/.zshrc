@@ -22,7 +22,6 @@ export EDITOR='vim'
 export GEM_HOME=$HOME/gems
 
 # ssh agent service socket
-#export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
 # if we're an ssh session, override TERM to something that should work everywhere
@@ -90,11 +89,12 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 
 # ls aliases
 LSBIN=$(bash -c "which ls")
-LS_BASE="$LSBIN --color=auto"
-alias l="$LS_BASE"
-alias ls="$LS_BASE -lh --group-directories-first"
+LS_BASE="$LSBIN --color=auto -h --group-directories-first"
+alias ls="$LS_BASE"
+alias l="$LS_BASE -l"
+alias ll="$LS_BASE -l"
 alias sl="ls"
-alias la="ls -Ah"
+alias la="ls -lAh"
 
 # git aliases
 alias gpo="git push origin $(git_current_branch)"
