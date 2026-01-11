@@ -1,3 +1,10 @@
+
+# Vim-like directional bindings
+set $left h
+set $down j
+set $up k
+set $right l
+
 ## -- Custom Application Variables --
 # applications
 set $term foot
