@@ -46,11 +46,10 @@ bindsym $mod+Return exec $term
 
 # Start a browser
 bindsym $mod+w exec $browser
-# qutebrowser
-bindsym $mod+q exec $mbrowser
 
 # Start exec launcher (dmenu path exec)
 bindsym $mod+d exec $menu_exec
+
 # Start app launcher (xdg app mode)
 bindsym $mod+Space exec $menu_apps
 
