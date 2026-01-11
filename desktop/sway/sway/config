@@ -10,20 +10,14 @@ include $subcfgs/variables
 
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-# Vim-like directional bindings
-set $left h
-set $down j
-set $up k
-set $right l
-
 
 ### Input configuration
 input "type:keyboard" {
     xkb_options caps:super
 }
 
-# Drag floating windows by holding down $mod and left mouse button.
-# Resize them with right mouse button + $mod.
+# Drag floating windows by holding down $mod and left mouse button. Resize them with right mouse
+# button + $mod.
 floating_modifier $mod normal
 
 
@@ -182,7 +176,7 @@ include $subcfgs/"$(hostnamectl hostname).config"
 # Status Bar:
 bar {
     position top
-    status_command i3status
+    status_command "i3status -c ~/.config/i3status/$(hostnamectl hostname).config"
 
     colors {
         background $cl_back
