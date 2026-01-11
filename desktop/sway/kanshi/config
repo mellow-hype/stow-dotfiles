@@ -1,6 +1,6 @@
 # ultrawide only
 profile {
-    output "Samsung Electric Company LC49G95T H4ZR904346" mode 5120x1440 enable adaptive_sync on position 0,0
+    output "Samsung Electric Company LC49G95T H4ZR904346" mode 5120x1440 enable position 0,0
 }
 
 # ultrawide + x1carbon screen off
