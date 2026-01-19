@@ -90,11 +90,13 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 # ls aliases
 LSBIN=$(bash -c "which ls")
 LS_BASE="$LSBIN --color=auto -h --group-directories-first"
-alias ls="$LS_BASE"
-alias l="$LS_BASE -l"
-alias ll="$LS_BASE -l"
+# long ls by default
+alias ls="$LS_BASE -l"
 alias sl="ls"
-alias la="ls -lAh"
+alias ll="$LS_BASE -l"
+# short ls
+alias l="$LS_BASE"
+alias la="$LS_BASE -lA"
 
 # git aliases
 alias gpo="git push origin $(git_current_branch)"
