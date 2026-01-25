@@ -21,6 +21,16 @@ export EDITOR='vim'
 # ruby gems setup
 export GEM_HOME=$HOME/gems
 
+# use zsh as the default shell in nix-shells
+if [[ -n "$IN_NIX_SHELL" ]]; then
+  label="nix-shell"
+  if [[ "$name" != "$label" ]]; then
+    label="$label:$name"
+  fi
+  export PS1=$'%{$fg[green]%}'"$label $PS1"
+  unset label
+fi
+
 # ssh agent service socket
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
