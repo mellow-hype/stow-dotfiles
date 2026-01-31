@@ -16,23 +16,26 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- colorschemes
-  use 'sainnhe/gruvbox-material'
-  use 'morhetz/gruvbox'
-
   -- core plugins
   use 'preservim/vim-markdown'
   use 'preservim/nerdtree'
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
+  use 'tpope/vim-eunuch'
+
+  -- colorschemes + looks
+  use 'sainnhe/gruvbox-material'
+  use 'morhetz/gruvbox'
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
 
   -- dev plugins
-  use 'dense-analysis/ale'
   use 'neovim/nvim-lspconfig'
+  use 'nvim-treesitter/nvim-treesitter'
+  -- use 'dense-analysis/ale'
 
+  -- picker
   use "ibhagwan/fzf-lua"
 
   -- this needs to come at the end of all other packages

@@ -33,3 +33,4 @@ setkey("n", "<leader>b", ":bprevious<cr>", {})
 setkey("n", "<leader>n", ":bnext<cr>", {})
 setkey("n", "<leader>x", ":bdelete<cr>", {})
 
+setkey("n", "<leader>ds", vim.diagnostic.open_float, {})
