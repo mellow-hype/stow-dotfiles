@@ -1,5 +1,5 @@
 
-require("nvim-treesitter.configs").setup {
+require("nvim-treesitter").setup {
   ensure_installed = { "python", "cpp", "lua", "vim", "json", "toml", "yaml" },
   ignore_install = {}, -- List of parsers to ignore installing
   highlight = {
