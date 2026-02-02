@@ -118,6 +118,10 @@ alias tml="tmux ls"
 alias tma="tmux attach -t"
 alias tmn="tmux new -s"
 
+# other convenience aliases
+alias c="clear"
+alias mkx="chmod +x"
+
 # import other aliases
 ALIAS_FILE="$HOME/.config/aliases"
 if [[ -e "$ALIAS_FILE" ]]; then
