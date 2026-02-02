@@ -74,10 +74,25 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ale = {
+  ["cmp-buffer"] = {
     loaded = true,
-    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/ale",
-    url = "https://github.com/dense-analysis/ale"
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/cmp-buffer",
+    url = "https://github.com/hrsh7th/cmp-buffer"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-omni"] = {
+    loaded = true,
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/cmp-omni",
+    url = "https://github.com/hrsh7th/cmp-omni"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
   },
   ["fzf-lua"] = {
     loaded = true,
@@ -94,10 +109,10 @@ _G.packer_plugins = {
     path = "/home/hyper/.local/share/nvim/site/pack/packer/start/gruvbox-material",
     url = "https://github.com/sainnhe/gruvbox-material"
   },
-  nerdtree = {
+  ["nvim-cmp"] = {
     loaded = true,
-    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/nerdtree",
-    url = "https://github.com/preservim/nerdtree"
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -140,18 +155,37 @@ _G.packer_plugins = {
     url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-markdown"] = {
-    loaded = true,
-    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/vim-markdown",
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/opt/vim-markdown",
     url = "https://github.com/preservim/vim-markdown"
   },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/hyper/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
+  },
+  ["which-key.nvim"] = {
+    loaded = true,
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
+vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /home/hyper/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], true)
+vim.cmd [[source /home/hyper/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
+time([[Sourcing ftdetect script at: /home/hyper/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

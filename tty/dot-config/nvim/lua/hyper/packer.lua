@@ -16,27 +16,36 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- core plugins
-  use 'preservim/vim-markdown'
-  use 'preservim/nerdtree'
+  --- core plugins
+  use { 'preservim/vim-markdown', ft = {"markdown"} }
+  -- use 'preservim/nerdtree'
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'tpope/vim-eunuch'
+  use "folke/which-key.nvim"
+
+  -- picker
+  use "ibhagwan/fzf-lua"
 
   -- colorschemes + looks
   use 'sainnhe/gruvbox-material'
   use 'morhetz/gruvbox'
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
+  -- use 'romgrk/barbar.nvim'
+
+  -- autocomplete
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-omni'
+  use 'hrsh7th/nvim-cmp'
 
   -- dev plugins
   use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
   -- use 'dense-analysis/ale'
-
-  -- picker
-  use "ibhagwan/fzf-lua"
 
   -- this needs to come at the end of all other packages
   if packer_bootstrap then
