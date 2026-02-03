@@ -38,7 +38,6 @@ setkey("v", "g=", "g<C-x>", { desc = "decrement selection" })
 
 
 
-
 --- ======================================================================================
 --- >>> CORE BINDINGS
 --- ======================================================================================
@@ -78,41 +77,9 @@ end, {desc = "toggle relativenumber"})
 setkey("n", "<leader>axx", "<cmd>%!xxd<cr>", {desc = "xxd hexify"})
 setkey("n", "<leader>axb", "<cmd>%!xxd -r<cr>", {desc = "xxd binify"})
 
-
---- ======================================================================================
---- >>> PICKER BINDINGS
---- ======================================================================================
-setkey('n', '<leader>H', fzflua.helptags, {desc = "helptags picker"})
-setkey('n', '<leader>,', fzflua.buffers, {desc = "buffer picker"})
-setkey('n', '<leader>/', fzflua.lgrep_curbuf, {desc = "livegrep current"})
-
--- picker: files/buffers
-setkey('n', '<leader>fb', fzflua.buffers, {desc = "buffer picker"})
-setkey('n', '<leader>ff', fzflua.files, {desc = "file picker"})
-setkey('n', '<leader>fh', fzflua.oldfiles, {desc = "old files"})
-
--- picker: searching (content)
-setkey('n', '<leader>fs', fzflua.live_grep, {desc = "livegrep"})
-setkey('n', '<leader>fw', fzflua.grep_cword, {desc = "grep word"})
-setkey('n', '<leader>fW', fzflua.grep_cWORD, {desc = "grep WORD"})
-
--- picker: jumps/navigation
-setkey('n', '<leader>fm', fzflua.marks, {desc = "marks list"})
-setkey('n', '<leader>fj', fzflua.jumps, {desc = "jump list"})
-setkey('n', '<leader>fy', fzflua.registers, {desc = "register list"})
-
--- picker: searching (meta)
-setkey('n', '<leader>fc', fzflua.colorschemes, {desc = "colorschemes picker"})
-
--- picker: diag/lsp
-setkey('n', '<leader>fr', fzflua.lsp_references, {desc = "fzf references"})
-setkey('n', '<leader>fd', fzflua.diagnostics_document, {desc = "fzf diagnostics"})
-setkey('n', '<leader>ft', fzflua.lsp_typedefs, {desc = "fzf typedefs"})
-setkey('n', '<leader>fo', fzflua.lsp_document_symbols, {desc = "fzf symbols"})
-
--- picker: git
-setkey('n', '<leader>gs', fzflua.git_status, {desc = "git status"})
-setkey('n', '<leader>gl', fzflua.git_commits, {desc = "git commits"})
+-- Git mappings
+setkey('n', '<leader>gcm', ":Git commit<cr>", {desc = "git commit"})
+setkey('n', '<leader>gcm', ":Git commit<cr>", {desc = "git commit"})
 
 
 
