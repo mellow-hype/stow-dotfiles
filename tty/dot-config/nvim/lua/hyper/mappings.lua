@@ -24,7 +24,24 @@ setkey("n", "<Left>", ":vertical resize -2<cr>", {noremap=true})
 setkey("n", "<Right>", ":vertical resize +2<cr>", {noremap=true})
 
 
+--- ======================================================================================
+-- >>> VISUAL MODE BINDS
+--- ======================================================================================
+-- Continuous visual shifting (does not exit Visual mode), `gv` means
+-- to reselect previous visual area, see https://superuser.com/q/310417/736190
+setkey("x", "<", "<gv")
+setkey("x", ">", ">gv")
+
+-- add/minus to number/alpha in highlighted text
+setkey("v", "g+", "g<C-a>", { desc = "increment selection" })
+setkey("v", "g=", "g<C-x>", { desc = "decrement selection" })
+
+
+
+
+--- ======================================================================================
 --- >>> CORE BINDINGS
+--- ======================================================================================
 -- core: write/quit
 setkey("n", "<leader>w", ":update<cr>", {desc = "update buffer"})
 setkey("n", "<leader>q", ":q<cr>",      {desc = "quit"})
@@ -44,13 +61,27 @@ setkey("n", "<leader>tt", ":tabnew<cr>", { desc = "new tab"})
 setkey("n", "<leader>tn", ":tabnext<cr>", { desc = "next tab"})
 setkey("n", "<leader>tp", ":tabprevious<cr>", { desc = "prev tab"})
 
+
+
+--- ======================================================================================
 --- >>> UTIL BINDINGS
+--- ======================================================================================
 setkey('n', '<leader>R', ":Rename ", {desc = "Rename file"})
 setkey("n", "<leader>cd", "<cmd>lcd %:p:h<cr><cmd>pwd<cr>", { desc = "change cwd" })
 
+--- >>> dynamic configuration bindings
+setkey("n", "<leader>cr", function()
+    vim.opt.relativenumber = not vim.opt.relativenumber
+end, {desc = "toggle relativenumber"})
+
+-- convert binary buffer to ascii hex and vice versa using xxd
+setkey("n", "<leader>axx", "<cmd>%!xxd<cr>", {desc = "xxd hexify"})
+setkey("n", "<leader>axb", "<cmd>%!xxd -r<cr>", {desc = "xxd binify"})
 
 
+--- ======================================================================================
 --- >>> PICKER BINDINGS
+--- ======================================================================================
 setkey('n', '<leader>H', fzflua.helptags, {desc = "helptags picker"})
 setkey('n', '<leader>,', fzflua.buffers, {desc = "buffer picker"})
 setkey('n', '<leader>/', fzflua.lgrep_curbuf, {desc = "livegrep current"})
@@ -84,17 +115,25 @@ setkey('n', '<leader>gs', fzflua.git_status, {desc = "git status"})
 setkey('n', '<leader>gl', fzflua.git_commits, {desc = "git commits"})
 
 
+
+--- ======================================================================================
 --- >>> LSP/diagnostics bindings
-setkey("n", "<C-x>R", vim.lsp.buf.rename, {desc = "rename variable"})
-setkey("n", "<C-x>k", vim.lsp.buf.signature_help, {desc = "show signature help"})
-setkey("n", "<C-x>d", vim.diagnostic.open_float, {desc = "show diagnostic float"})
+--- ======================================================================================
+setkey("n", "grn", vim.lsp.buf.rename,          {desc = "rename variable"})
+setkey("n", "gri", vim.lsp.buf.implementation,  {desc = "implementation"})
+setkey("n", "grr", vim.lsp.buf.references,      {desc = "references"})
+setkey("n", "grt", vim.lsp.buf.type_definition, {desc = "typedefs"})
+setkey("n", "gO",  vim.lsp.buf.document_symbol, {desc = "symbols (doc)"})
+
+setkey("i", "<C-s>", vim.lsp.buf.signature_help,{desc = "show signature help"})
+setkey("n", "<C-x>d", vim.diagnostic.open_float,{desc = "show diagnostic float"})
 
 -- toggle lsp hover info
 setkey('n', 'K', function()
   vim.lsp.buf.hover {
     border = "single",
     close_events = { "CursorMoved", "BufLeave", "WinLeave", "LSPDetach" },
-} end, { desc = "Toggle LSP hover" })
+} end, { desc = "Toggle hover" })
 
 -- toggle virtual text inline diagnostics
 setkey('n', 'gK', function()
@@ -137,11 +176,4 @@ setkey("n", "gd", function()
     end,
   }
 end, { desc = "Goto definition" })
-
-
--- >>> VISUAL MODE BINDS
--- Continuous visual shifting (does not exit Visual mode), `gv` means
--- to reselect previous visual area, see https://superuser.com/q/310417/736190
-setkey("x", "<", "<gv")
-setkey("x", ">", ">gv")
 

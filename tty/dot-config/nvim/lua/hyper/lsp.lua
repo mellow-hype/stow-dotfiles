@@ -1,4 +1,3 @@
-
 -- setup for completion via cmp
 local cmp = require("cmp")
 require("cmp_nvim_lsp")
@@ -41,8 +40,7 @@ cmp.setup{
 vim.lsp.enable({
     "clangd",
     "lua-language-server",
-    -- "docker-language-server",
-    -- "pyright",
+    "docker_language_server",
+    "nixd",
 })
 
--- vim.lsp.config("pyright")
