@@ -1,5 +1,4 @@
 local setkey = vim.keymap.set
-local fzflua = require('fzf-lua')
 
 -- set leader
 vim.g.mapleader = " "
@@ -67,11 +66,6 @@ setkey("n", "<leader>tp", ":tabprevious<cr>", { desc = "prev tab"})
 --- ======================================================================================
 setkey('n', '<leader>R', ":Rename ", {desc = "Rename file"})
 setkey("n", "<leader>cd", "<cmd>lcd %:p:h<cr><cmd>pwd<cr>", { desc = "change cwd" })
-
---- >>> dynamic configuration bindings
-setkey("n", "<leader>cr", function()
-    vim.opt.relativenumber = not vim.opt.relativenumber
-end, {desc = "toggle relativenumber"})
 
 -- convert binary buffer to ascii hex and vice versa using xxd
 setkey("n", "<leader>axx", "<cmd>%!xxd<cr>", {desc = "xxd hexify"})

@@ -41,7 +41,7 @@ return {
   settings = {
     Lua = {
         hint = {
-          enable = true,
+          enable = false,
         },
         runtime = {
           version = 'LuaJIT',

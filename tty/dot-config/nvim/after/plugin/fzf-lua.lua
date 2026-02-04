@@ -64,12 +64,25 @@ setkey('n', '<leader>gs', fzflua.git_status,    {desc = "git status"})
 setkey('n', '<leader>gl', fzflua.git_commits,   {desc = "git log"})
 
 
+
+local function open_dir_picker(data)
+  -- check if buffer is a directory
+  local directory = vim.fn.isdirectory(data.file) == 1
+
+  if not directory then
+    return
+  end
+
+  -- create a new, empty buffer
+  vim.cmd.enew()
+
+  -- wipe the directory buffer
+  vim.cmd.bw(data.buf)
+
+  -- open the tree
+  fzflua.files({ cwd = vim.fn.argv(0) })
+end
+
 -- Autostart files picker if vim was started with a directory arg
-vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-        if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-            fzflua.files({ cwd = vim.fn.argv(0) })
-        end
-    end,
-})
+vim.api.nvim_create_autocmd("VimEnter", { callback = open_dir_picker })
 
