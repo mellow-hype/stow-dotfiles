@@ -26,11 +26,6 @@ setkey("n", "<Right>", ":vertical resize +2<cr>", {noremap=true})
 --- ======================================================================================
 -- >>> VISUAL MODE BINDS
 --- ======================================================================================
--- Continuous visual shifting (does not exit Visual mode), `gv` means
--- to reselect previous visual area, see https://superuser.com/q/310417/736190
-setkey("x", "<", "<gv")
-setkey("x", ">", ">gv")
-
 -- add/minus to number/alpha in highlighted text
 setkey("v", "g+", "g<C-a>", { desc = "increment selection" })
 setkey("v", "g=", "g<C-x>", { desc = "decrement selection" })
@@ -48,7 +43,8 @@ setkey("n", "<leader>Q", ":qa!<cr>",    {silent = true, desc = "quit all"})
 -- nav: manage buffers
 setkey("n", "<leader>b", ":bprevious<cr>",  {desc = "previous buffer"})
 setkey("n", "<leader>n", ":bnext<cr>",      {desc = "next buffer"})
-setkey("n", "<leader>x", ":bdelete<cr>",    {desc = "delete buffer"})
+setkey("n", "<leader>x", ":BufDel<cr>",     {desc = "bufdel"})
+setkey("n", "<leader>X", ":bdelete<cr>",    {desc = "delete buffer"})
 
 -- core: views
 setkey("n", "<leader>vs", ":vsplit<cr>",    {desc = "vertical split"})
@@ -64,16 +60,18 @@ setkey("n", "<leader>tp", ":tabprevious<cr>", { desc = "prev tab"})
 --- ======================================================================================
 --- >>> UTIL BINDINGS
 --- ======================================================================================
-setkey('n', '<leader>R', ":Rename ", {desc = "Rename file"})
+setkey('n', '<leader>ur', ":Rename ",   {desc = "Rename"})
+setkey('n', '<leader>um', ":Move ",     {desc = "Move"})
+setkey('n', '<leader>ud', ":Mkdir ",    {desc = "Mkdir"})
+setkey('n', '<leader>uD', ":Delete<cr>", {desc = "Delete"})
 setkey("n", "<leader>cd", "<cmd>lcd %:p:h<cr><cmd>pwd<cr>", { desc = "change cwd" })
 
 -- convert binary buffer to ascii hex and vice versa using xxd
-setkey("n", "<leader>axx", "<cmd>%!xxd<cr>", {desc = "xxd hexify"})
-setkey("n", "<leader>axb", "<cmd>%!xxd -r<cr>", {desc = "xxd binify"})
+setkey("n", "<leader>ux", "<cmd>%!xxd<cr>",     {desc = "xxd hexify"})
+setkey("n", "<leader>uX", "<cmd>%!xxd -r<cr>",  {desc = "xxd binify"})
 
 -- Git mappings
-setkey('n', '<leader>gcm', ":Git commit<cr>", {desc = "git commit"})
-setkey('n', '<leader>gcm', ":Git commit<cr>", {desc = "git commit"})
+setkey('n', '<leader>gc', ":Git commit<cr>", {desc = "git commit"})
 
 
 

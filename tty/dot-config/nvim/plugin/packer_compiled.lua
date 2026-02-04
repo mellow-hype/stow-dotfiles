@@ -104,15 +104,10 @@ _G.packer_plugins = {
     path = "/home/hyper/.local/share/nvim/site/pack/packer/start/fzf-lua",
     url = "https://github.com/ibhagwan/fzf-lua"
   },
-  gruvbox = {
+  ["nvim-bufdel"] = {
     loaded = true,
-    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/gruvbox",
-    url = "https://github.com/morhetz/gruvbox"
-  },
-  ["gruvbox-material"] = {
-    loaded = true,
-    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/gruvbox-material",
-    url = "https://github.com/sainnhe/gruvbox-material"
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/nvim-bufdel",
+    url = "https://github.com/ojroques/nvim-bufdel"
   },
   ["nvim-cmp"] = {
     loaded = true,
