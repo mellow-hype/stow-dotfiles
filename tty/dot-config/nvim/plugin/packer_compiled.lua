@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/home/hyper/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["dashboard-nvim"] = {
+    loaded = true,
+    path = "/home/hyper/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
+    url = "https://github.com/nvimdev/dashboard-nvim"
+  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/home/hyper/.local/share/nvim/site/pack/packer/start/fzf-lua",

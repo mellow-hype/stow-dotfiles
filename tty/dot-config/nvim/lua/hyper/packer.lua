@@ -17,23 +17,23 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   --- core plugins
-  use { 'preservim/vim-markdown', ft = {"markdown"} }
   -- use 'preservim/nerdtree'
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'tpope/vim-eunuch'
   use "folke/which-key.nvim"
+  use 'ojroques/nvim-bufdel' -- smarter bufdelete
 
-  -- picker
+  --- picker
   use "ibhagwan/fzf-lua"
 
-  -- colorschemes + looks
-  use 'sainnhe/gruvbox-material'
-  use 'morhetz/gruvbox'
+  --- colorschemes + looks
+  -- use 'sainnhe/gruvbox-material'
+  -- use 'morhetz/gruvbox'
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
-  -- use 'romgrk/barbar.nvim'
+  use 'nvimdev/dashboard-nvim'
 
   -- autocomplete
   use 'hrsh7th/cmp-nvim-lsp'
@@ -45,7 +45,9 @@ return require('packer').startup(function(use)
   -- dev plugins
   use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
-  -- use 'dense-analysis/ale'
+
+  -- filetype support
+  use { 'preservim/vim-markdown', ft = {"markdown"} }
 
   -- this needs to come at the end of all other packages
   if packer_bootstrap then

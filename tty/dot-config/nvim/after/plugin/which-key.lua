@@ -1,6 +1,13 @@
 
 require("which-key").setup {
-  preset = "modern",
+  preset = "classic",
+  plugins = {
+      marks = true,
+      spelling = { enabled = false },
+      presets = {
+          operators = false,
+      },
+  },
   icons = {
     mappings = false,
   },
