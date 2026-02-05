@@ -1,7 +1,4 @@
 
-local testfunc = function()
-end
-
 local goto_def = function(options)
   local unique_defs = {}
   local def_loc_hash = {}

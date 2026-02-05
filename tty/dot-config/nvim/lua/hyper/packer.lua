@@ -29,10 +29,10 @@ return require('packer').startup(function(use)
 
   --- colorschemes + looks
   use {
-      'nvim-lualine/lualine.nvim',
-      config = function()
-          require('lualine').setup()
-      end,
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup()
+    end,
   }
   use 'nvimdev/dashboard-nvim'
 
@@ -47,8 +47,8 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
   use {
-      'rcarriga/nvim-dap-ui',
-      requires = {{'mfussenegger/nvim-dap'}, {'nvim-neotest/nvim-nio'}}
+    'rcarriga/nvim-dap-ui',
+    requires = {{'mfussenegger/nvim-dap'}, {'nvim-neotest/nvim-nio'}}
   }
 
   -- filetype support
@@ -56,6 +56,6 @@ return require('packer').startup(function(use)
 
   -- this needs to come at the end of all other packages
   if packer_bootstrap then
-      require('packer').sync()
+    require('packer').sync()
   end
 end)

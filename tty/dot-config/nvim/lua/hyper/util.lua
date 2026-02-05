@@ -8,16 +8,16 @@ local M = {}
 -- ==========================================================================================
 --- Get a file path from input
 M.input_exec_path = function()
-    return vim.fn.input('Path to executable (default to "a.out"): ', vim.fn.expand("%:p:h") .. "/a.out", "file")
+  return vim.fn.input('Path to executable (default to "a.out"): ', vim.fn.expand("%:p:h") .. "/a.out", "file")
 end
 
 M.input_args = function()
-    local argument_string = vim.fn.input("Program arg(s) (enter nothing to leave it null): ")
-    return vim.fn.split(argument_string, " ", true)
+  local argument_string = vim.fn.input("Program arg(s) (enter nothing to leave it null): ")
+  return vim.fn.split(argument_string, " ", true)
 end
 
 M.input_file_path = function()
-    return vim.fn.input("Path to debuggee (default to the current file): ", vim.fn.expand("%:p"), "file")
+  return vim.fn.input("Path to debuggee (default to the current file): ", vim.fn.expand("%:p"), "file")
 end
 
 
@@ -48,25 +48,25 @@ end
 
 -- use fzf-lua file picker to open or create
 M.fzf_file_ocreate = function()
-    local fzflua = require('fzf-lua')
-    fzflua.files({
-      actions = {
-        ["default"] = function(selected, opts)
-            local selected_item = selected[1]
-            local status, entry =
-                pcall(fzflua.path.entry_to_file, selected_item, opts, opts.force_uri)
-            local last_query =
-                fzflua.config.__resume_data.last_query
-            if selected_item and status and vim.loop.fs_stat(entry.path) then
-                -- file exists: edit file
-                fzflua.actions.file_edit(selected, opts)
-            else
-                -- file not exists: create new
-                vim.cmd("e " .. last_query)
-          end
-        end,
-      },
-    })
+  local fzflua = require('fzf-lua')
+  fzflua.files({
+    actions = {
+      ["default"] = function(selected, opts)
+        local selected_item = selected[1]
+        local status, entry =
+            pcall(fzflua.path.entry_to_file, selected_item, opts, opts.force_uri)
+        local last_query =
+            fzflua.config.__resume_data.last_query
+        if selected_item and status and vim.loop.fs_stat(entry.path) then
+            -- file exists: edit file
+            fzflua.actions.file_edit(selected, opts)
+        else
+          -- file not exists: create new
+          vim.cmd("e " .. last_query)
+        end
+      end,
+    },
+  })
 end
 
 return M

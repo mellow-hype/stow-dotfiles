@@ -136,34 +136,32 @@ doom_conf.center = {
 -- =======================================================================================
 local hyper_conf = {}
 hyper_conf.shortcut = {
-    {
-        icon = "  ",
-        desc = "New",
-        action = "enew",
-        group = 'Label',
-        key = "e",
-    },
-    {
-        icon = '󰈞  ',
-        desc = 'Files',
-        group = 'DiagnosticHint',
-        action = 'FzfLuz files',
-        key = 'f',
-    },
-    {
-        icon = "󰗼  ",
-        desc = "Quit",
-        action = "qa",
-        group = 'Number',
-        key = "q",
-    },
+  {
+    icon = "  ",
+    desc = "New",
+    action = "enew",
+    group = 'Label',
+    key = "e",
+  },
+  {
+    icon = '󰈞  ',
+    desc = 'Files',
+    group = 'DiagnosticHint',
+    action = 'FzfLuz files',
+    key = 'f',
+  },
+  {
+    icon = "󰗼  ",
+    desc = "Quit",
+    action = "qa",
+    group = 'Number',
+    key = "q",
+  },
 }
 hyper_conf.week_header = { enable = false }
 hyper_conf.project = { enable = false, limit = 4 }
 hyper_conf.mru = { enable = true, limit = 8 }
 hyper_conf.footer = {}
-
-
 
 
 -- =======================================================================================
@@ -174,6 +172,6 @@ use_conf.header = headers.hyprvim
 
 local dash = require('dashboard')
 dash.setup {
-    theme = use_theme,
-    config = use_conf,
+  theme = use_theme,
+  config = use_conf,
 }
