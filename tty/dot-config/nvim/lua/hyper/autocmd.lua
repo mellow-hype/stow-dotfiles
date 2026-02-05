@@ -1,23 +1,27 @@
 -- custom filetype associations
 vim.filetype.add({
-    pattern = {
-        [".*/sway/config.d/.*"] = "swayconfig",
-        [".*/dunstrc"] = "dosini",
-    },
+  pattern = {
+    [".*/sway/config.d/.*"] = "swayconfig",
+    [".*/dunstrc"] = "dosini",
+  },
 })
 
 -- python
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "python",
-    command = "setlocal foldmethod=indent expandtab tabstop=4 shiftwidth=4 softtabstop=4"
+  pattern = "python",
+  command = "setlocal foldmethod=indent expandtab tabstop=4 shiftwidth=4 softtabstop=4"
 })
 
 -- markdown
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "markdown",
-    command = "setlocal colorcolumn=100 textwidth=100 conceallevel=2 wrap"
+  pattern = "markdown",
+  command = "setlocal colorcolumn=100 textwidth=100 conceallevel=2 wrap"
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2"
+})
 
 -- Return to last edited line upon reopen
 vim.cmd([[

@@ -1,4 +1,6 @@
 
+-- configure capabilities
+
 return {
   on_init = function(client)
       if client.workspace_folders then
@@ -11,16 +13,15 @@ return {
         end
       end
 
+      local caps = vim.lsp.protocol.make_client_capabilities()
+      caps = vim.tbl_deep_extend('force', caps, require('cmp_nvim_lsp').default_capabilities())
+      client.config.capabilities = vim.tbl_deep_extend('force', client.config.capabilities or {}, caps)
       client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
         runtime = {
-          -- Tell the language server which version of Lua you're using (most
-          -- likely LuaJIT in the case of Neovim)
           version = 'LuaJIT',
-          -- Tell the language server how to find Lua modules same way as Neovim
-          -- (see `:h lua-module-load`)
           path = {
+            'lua/?.lua',
             'lua/?/?.lua',
-            '?/init.lua',
           },
         },
         diagnostics = {
@@ -30,11 +31,15 @@ return {
         workspace = {
           checkThirdParty = false,
           library = {
-            vim.env.VIMRUNTIME,
+              '${3rd}/luv/library',
+              unpack(vim.api.nvim_get_runtime_file('', true)),
+              vim.env.VIMRUNTIME,
           },
         },
       })
   end,
+
+  capabilities = {},
   cmd = { "/run/current-system/sw/bin/zsh", "-c", "'lua-language-server'" },
   filetypes = { 'lua' },
   root_markers = { 'init.lua' },
@@ -52,6 +57,13 @@ return {
         },
         diagnostics = {
             globals = {"vim"},
+        },
+        -- Make the server aware of Neovim runtime files
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+          },
         },
     },
   },

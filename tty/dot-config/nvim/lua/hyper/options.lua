@@ -18,12 +18,9 @@ vim.opt.clipboard = 'unnamedplus'
 -- general ui
 vim.opt.number = true
 vim.opt.relativenumber = true
-
---cursor and ruler
+vim.opt.showcmd = false
 vim.opt.ruler = true
 vim.opt.cursorline = true
-
--- show column at 100
 vim.opt.colorcolumn = "100"
 
 -- list
@@ -37,6 +34,7 @@ vim.opt.listchars = {
 
 -- tabs and stuff
 vim.opt.expandtab = true
+vim.opt.smarttab = true
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
@@ -52,6 +50,8 @@ vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
+vim.opt.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+
 
 -- folding
 vim.opt.foldmethod = "indent"

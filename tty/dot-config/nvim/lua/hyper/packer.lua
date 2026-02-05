@@ -17,7 +17,6 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   --- core plugins
-  -- use 'preservim/nerdtree'
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
@@ -29,10 +28,12 @@ return require('packer').startup(function(use)
   use "ibhagwan/fzf-lua"
 
   --- colorschemes + looks
-  -- use 'sainnhe/gruvbox-material'
-  -- use 'morhetz/gruvbox'
-  use 'vim-airline/vim-airline'
-  use 'vim-airline/vim-airline-themes'
+  use {
+      'nvim-lualine/lualine.nvim',
+      config = function()
+          require('lualine').setup()
+      end,
+  }
   use 'nvimdev/dashboard-nvim'
 
   -- autocomplete
@@ -45,6 +46,10 @@ return require('packer').startup(function(use)
   -- dev plugins
   use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
+  use {
+      'rcarriga/nvim-dap-ui',
+      requires = {{'mfussenegger/nvim-dap'}, {'nvim-neotest/nvim-nio'}}
+  }
 
   -- filetype support
   use { 'preservim/vim-markdown', ft = {"markdown"} }

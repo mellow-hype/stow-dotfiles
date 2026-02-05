@@ -1,6 +1,5 @@
 
 local diagnostic = vim.diagnostic
-local api = vim.api
 
 diagnostic.config {
     underline = true,
@@ -16,23 +15,24 @@ diagnostic.config {
     },
 }
 
-api.nvim_create_autocmd("CursorHold", {
-  pattern = "*",
-  callback = function()
-    if #vim.diagnostic.get(0) == 0 then
-      return
-    end
+-- autocmd to pop the diagnostic float automatically when the cursor is held
+-- vim.api.nvim_create_autocmd("CursorHold", {
+--   pattern = "*",
+--   callback = function()
+--     if #vim.diagnostic.get(0) == 0 then
+--       return
+--     end
 
-    if not vim.b.diagnostics_pos then
-      vim.b.diagnostics_pos = { nil, nil }
-    end
+--     if not vim.b.diagnostics_pos then
+--       vim.b.diagnostics_pos = { nil, nil }
+--     end
 
-    local cursor_pos = api.nvim_win_get_cursor(0)
+--     local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-    if not vim.deep_equal(cursor_pos, vim.b.diagnostics_pos) then
-      diagnostic.open_float {}
-    end
+--     if not vim.deep_equal(cursor_pos, vim.b.diagnostics_pos) then
+--       diagnostic.open_float {}
+--     end
 
-    vim.b.diagnostics_pos = cursor_pos
-  end,
-})
+--     vim.b.diagnostics_pos = cursor_pos
+--   end,
+-- })

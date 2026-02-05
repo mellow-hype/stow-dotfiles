@@ -9,6 +9,8 @@ syntax enable
 require('hyper.global')
 -- options
 require('hyper.options')
+-- custom autocmd
+require('hyper.autocmd')
 -- plugin manager
 require('hyper.packer')
 -- completion setup
@@ -17,8 +19,6 @@ require('hyper.completion')
 require('hyper.lsp')
 -- dashboard
 require('hyper.dash')
--- custom autocmd
-require('hyper.autocmd')
 -- keymappings
 require('hyper.mappings')
 -- diagnostics configs

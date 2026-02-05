@@ -1,6 +1,7 @@
 
 -- initial setup
-require("fzf-lua").setup({
+local fzflua = require('fzf-lua')
+fzflua.setup({
     "max-perf",
     files = {
         hidden = false, -- don't show hidden files in search by default
@@ -19,68 +20,45 @@ require("fzf-lua").setup({
     },
 })
 
-local setkey = vim.keymap.set
-local fzflua = require('fzf-lua')
 
 --- ======================================================================================
 --- >>> PICKER BINDINGS
 --- ======================================================================================
-setkey('n', '<leader>H', fzflua.helptags,   {desc = "fzf helptags"})
+local setkey = vim.keymap.set
 setkey('n', '<leader>,', fzflua.buffers,    {desc = "fzf buffers"})
-setkey('n', '<leader>/', fzflua.lgrep_curbuf, {desc = "fzf grep buffer"})
 
 -- picker: files/buffers
 setkey('n', '<leader>fb', fzflua.buffers,   {desc = "fzf buffers"})
 setkey('n', '<leader>ff', fzflua.files,     {desc = "fzf files"})
 setkey('n', '<leader>fh', fzflua.oldfiles,  {desc = "fzf oldfiles"})
 
--- picker: searching (content)
-setkey('n', '<leader>fs', fzflua.live_grep, {desc = "livegrep"})
-setkey('n', '<leader>fw', fzflua.grep_cword,{desc = "fzf cword"})
-setkey('n', '<leader>fW', fzflua.grep_cWORD,{desc = "fzf cWORD"})
+-- picker: searching
+setkey('n', '<leader>s/', fzflua.lgrep_curbuf, {desc = "search buffer"})
+setkey('n', '<leader>ss', fzflua.live_grep, {desc = "livegrep"})
+setkey('n', '<leader>sw', fzflua.grep_cword,{desc = "search cursor word"})
+setkey('n', '<leader>sW', fzflua.grep_cWORD,{desc = "search cursor WORD"})
+setkey('n', '<leader>sh', fzflua.helptags,  {desc = "search helptags"})
 
--- picker: jumps/navigation
-setkey('n', '<leader>fm', fzflua.marks,     {desc = "fzf marks"})
-setkey('n', '<leader>fj', fzflua.jumps,     {desc = "fzf jumplist"})
-setkey('n', '<leader>fy', fzflua.registers, {desc = "fzf registers"})
-setkey('n', '<leader>ft', fzflua.tabs,      {desc = "fzf tabs"})
-
--- picker: searching (meta)
-setkey('n', '<leader>fC', fzflua.colorschemes, {desc = "fzf colorschemes"})
-
--- picker: diag/lsp
-setkey('n', '<leader>fgr', fzflua.lsp_references,        {desc = "fzf references"})
-setkey('n', '<leader>fgd', fzflua.lsp_definitions,       {desc = "fzf definitions"})
-setkey('n', '<leader>fgi', fzflua.lsp_implementations,   {desc = "fzf implementations"})
-setkey('n', '<leader>fgt', fzflua.lsp_typedefs,          {desc = "fzf typedefs"})
-setkey('n', '<leader>fgk', fzflua.diagnostics_document,  {desc = "fzf diagnostics"})
-setkey('n', '<leader>fga', fzflua.lsp_code_actions,      {desc = "fzf code actions"})
-setkey('n', '<leader>fgo',  fzflua.lsp_document_symbols, {desc = "fzf symbols"})
+-- picker: misc menus
+setkey('n', '<leader>mm', fzflua.marks,     {desc = "fzf marks"})
+setkey('n', '<leader>mj', fzflua.jumps,     {desc = "fzf jumplist"})
+setkey('n', '<leader>my', fzflua.registers, {desc = "fzf registers"})
+setkey('n', '<leader>mt', fzflua.tabs,      {desc = "fzf tabs"})
+setkey('n', '<leader>mC', fzflua.colorschemes, {desc = "fzf colorschemes"})
 
 -- picker: git
 setkey('n', '<leader>gs', fzflua.git_status,    {desc = "git status"})
 setkey('n', '<leader>gl', fzflua.git_commits,   {desc = "git log"})
 
 
+--- ======================================================================================
+--- >>> CUSTOM BINDINGS
+--- ======================================================================================
+local util = require('hyper.util')
 
-local function open_dir_picker(data)
-  -- check if buffer is a directory
-  local directory = vim.fn.isdirectory(data.file) == 1
-
-  if not directory then
-    return
-  end
-
-  -- create a new, empty buffer
-  vim.cmd.enew()
-
-  -- wipe the directory buffer
-  vim.cmd.bw(data.buf)
-
-  -- open the tree
-  fzflua.files({ cwd = vim.fn.argv(0) })
-end
+--- Create new file using fzf prompt entry
+vim.keymap.set("n", "<leader>fn", util.fzf_file_ocreate, {desc = "new file"})
 
 -- Autostart files picker if vim was started with a directory arg
-vim.api.nvim_create_autocmd("VimEnter", { callback = open_dir_picker })
+vim.api.nvim_create_autocmd("VimEnter", { callback = util.open_dir_picker })
 
