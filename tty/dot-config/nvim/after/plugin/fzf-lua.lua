@@ -2,22 +2,22 @@
 -- initial setup
 local fzflua = require('fzf-lua')
 fzflua.setup({
-    "max-perf",
-    files = {
-        hidden = false, -- don't show hidden files in search by default
-        follow = true,  -- follow symlinks
+  "max-perf",
+  files = {
+    hidden = false, -- don't show hidden files in search by default
+    follow = true,  -- follow symlinks
+  },
+  winopts = {
+    width = 0.80,
+    row = 0.40,
+    col = 0.50,
+    preview = { hidden = true },
+  },
+  keymap = {
+    builtin = {
+      ["<M-a>"] = "toggle-preview",
     },
-    winopts = {
-        width = 0.80,
-        row = 0.40,
-        col = 0.50,
-        preview = { hidden = true },
-    },
-    keymap = {
-        builtin = {
-            ["<M-a>"] = "toggle-preview",
-        },
-    },
+  },
 })
 
 

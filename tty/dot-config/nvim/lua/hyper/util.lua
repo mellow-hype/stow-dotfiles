@@ -3,6 +3,13 @@
 
 local M = {}
 
+-- toggle dianostic virtual lines in buffer
+M.toggle_diag_lines = function()
+  local new_config = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = new_config })
+end
+
+
 -- ==========================================================================================
 --- DAP
 -- ==========================================================================================
@@ -21,6 +28,9 @@ M.input_file_path = function()
 end
 
 
+-- ==========================================================================================
+--- Utility
+-- ==========================================================================================
 --- Used to pop open the fzf file picker vim is passed a directory for editing
 M.open_dir_picker = function(data)
   local fzflua = require('fzf-lua')
@@ -36,13 +46,6 @@ M.open_dir_picker = function(data)
   vim.cmd.bw(data.buf)
   -- open the fzf file picker
   fzflua.files({ cwd = vim.fn.argv(0) })
-end
-
-
--- toggle dianostic virtual lines in buffer
-M.toggle_diag_lines = function()
-  local new_config = not vim.diagnostic.config().virtual_lines
-  vim.diagnostic.config({ virtual_lines = new_config })
 end
 
 

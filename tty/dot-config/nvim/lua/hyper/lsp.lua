@@ -1,4 +1,5 @@
 
+-- smarter lsp goto definition
 local goto_def = function(options)
   local unique_defs = {}
   local def_loc_hash = {}
@@ -30,6 +31,16 @@ local goto_def = function(options)
   end
 end
 
+
+-- Configured LSP servers
+local servers = {
+  'lua-language-server',
+  'clangd',
+  'nixd',
+  "docker_language_server",
+}
+
+-- Configure LSP via LspAttach event
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local fzflua = require('fzf-lua')
@@ -79,11 +90,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local caps = vim.lsp.protocol.make_client_capabilities()
     caps = vim.tbl_deep_extend('force', caps, require('cmp_nvim_lsp').default_capabilities())
     -- configure servers
-    local servers = {
-      'lua-language-server',
-      'clangd',
-      'nixd',
-    }
     for _, server_name in ipairs(servers) do
       local server = {}
       server.capabilities = vim.tbl_deep_extend('force', {}, caps, server.capabilities or {})
@@ -93,10 +99,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
-vim.lsp.enable({
-  "clangd",
-  "lua-language-server",
-  "docker_language_server",
-  "nixd",
-})
+-- enable lsp servers
+vim.lsp.enable(servers)
 
