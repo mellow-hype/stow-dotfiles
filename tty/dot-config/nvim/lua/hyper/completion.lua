@@ -7,7 +7,6 @@ require("cmp_buffer")
 require("cmp_omni")
 
 cmp.setup{
-
   mapping = cmp.mapping.preset.insert {
     ["<Tab>"] = function(fallback)
       if cmp.visible() then
@@ -23,7 +22,10 @@ cmp.setup{
         fallback()
       end
     end,
-    ["<CR>"] = cmp.mapping.confirm { select = true },
+    -- use select=false to only confirm explicitly selected items; this avoids annoying cases where
+    -- the you try to hit <cr> to start a new line but the completion menu is active and has an item
+    -- available and so the completion is triggered rather than starting a new line.
+    ["<CR>"] = cmp.mapping.confirm { select = false },
     ["<C-c>"] = cmp.mapping.close(),
     ["<C-e>"] = cmp.mapping.abort(),
   },
