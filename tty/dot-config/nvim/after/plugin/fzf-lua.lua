@@ -16,6 +16,7 @@ fzflua.setup({
   keymap = {
     builtin = {
       ["<M-a>"] = "toggle-preview",
+      ["<M-w>"] = "toggle-hidden",
     },
   },
 })
