@@ -26,11 +26,11 @@ bindsym $mod+Control+r mode $resize_mode
 
 # Toggle session manager menu
 set $sessman ~/.config/sway/sessionman.sh
-bindsym $mod+Control+Escape exec $sessman
+bindsym $mod+Control+Backspace exec $sessman
 
 # 1password dmenu grabber
 set $dm1pass ~/bin/fz1p
-bindsym $mod+Control+o $dm1pass
+bindsym $mod+Control+o exec $dm1pass
 
 # screenshots select
 set $screenclip ~/bin/grimsel
