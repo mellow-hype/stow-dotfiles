@@ -147,7 +147,7 @@ hyper_conf.shortcut = {
     icon = '󰈞  ',
     desc = 'Files',
     group = 'DiagnosticHint',
-    action = 'FzfLuz files',
+    action = 'FzfLua files',
     key = 'f',
   },
   {
