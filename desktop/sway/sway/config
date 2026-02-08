@@ -56,6 +56,9 @@ bindsym $mod+Space exec $menu_apps
 # Focus selector menu
 bindsym $mod+Tab exec $swayfocus
 
+# Kill focused window
+bindsym $mod+x kill
+
 # --- Focus ---
 # Move your focus around
 bindsym $mod+$left focus left
@@ -110,7 +113,6 @@ bindsym $mod+p [instance="1password"] scratchpad show
 bindsym $mod+m exec $mark_menu
 # Custom menu to select/jump to mark
 bindsym $mod+g exec $goto_menu
-
 
 # ============= SECONDARY LAYER =============
 # Kill focused window
