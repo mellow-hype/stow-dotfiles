@@ -68,9 +68,9 @@ function vi_mode_cursor_set() {
 
 # set prompt, mode indicator, and update cursor
 function zle-keymap-select {
-    VIM_NORMAL_PROMPT="%{$fg_bold[green]%} [% N]% %{$reset_color%}"
-    VIM_INSERT_PROMPT="%{$fg_bold[magenta]%} [% I]% %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_NORMAL_PROMPT}/(main|viins)/$VIM_INSERT_PROMPT} %D{%T}"
+    # VIM_NORMAL_PROMPT="%{$fg_bold[green]%} [% N]% %{$reset_color%}"
+    # VIM_INSERT_PROMPT="%{$fg_bold[magenta]%} [% I]% %{$reset_color%}"
+    # RPS1="${${KEYMAP/vicmd/$VIM_NORMAL_PROMPT}/(main|viins)/$VIM_INSERT_PROMPT} %D{%T}"
     vi_mode_cursor_set
     zle reset-prompt
 }
@@ -81,13 +81,6 @@ function zle-line-init  {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-
-# HOOKS - run ahead of the prompt being generated (i.e. each time control returns to the terminal)
-# ring a bell each time (god help you if you leave the bell sound on)
-ring_bell_on_pre() { echo -n -e "\a" }
-# rprompt_ts() { RPROMPT="%D{%T}" }
-typeset -a precmd_functions
-precmd_functions+=(ring_bell_on_pre)
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes.
