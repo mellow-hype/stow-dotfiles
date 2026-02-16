@@ -20,10 +20,7 @@ endif
 .PHONY: help tty
 
 help:
-	@echo "stow-dotfiles — public TTY configs"
-	@echo ""
-	@echo "NOTE: Desktop, emacs, color themes, and scripts have been"
-	@echo "migrated to the private priv-configs repository."
+	@echo "stow-dotfiles — basic TTY configs"
 	@echo ""
 	@echo "Targets:"
 	@echo "  tty     deploy .gitconfig, .tmux.conf, .zshrc, zsh-custom, minimal nvim"

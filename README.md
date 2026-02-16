@@ -1,10 +1,6 @@
 # dotfiles w/ stow
 
-Public TTY dotfiles for use in keyless/untrusted environments.
-
-> **Migration notice:** Desktop configs, emacs, color themes, scripts, and the full
-> Neovim config have been migrated to the private `priv-configs` repository.
-> This repo now contains only the minimal TTY set below.
+TTY dotfiles for use in keyless/untrusted environments.
 
 ## What's included
 
