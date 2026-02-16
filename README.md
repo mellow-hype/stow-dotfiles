@@ -1,36 +1,31 @@
 # dotfiles w/ stow
 
-## clone the repo
+Public TTY dotfiles for use in keyless/untrusted environments.
 
-```
-git clone --recursive <this-repo> ~/.stow-dotfiles
-```
+> **Migration notice:** Desktop configs, emacs, color themes, scripts, and the full
+> Neovim config have been migrated to the private `priv-configs` repository.
+> This repo now contains only the minimal TTY set below.
 
-## install basic tty dotfiles (nvim, zshrc, tmux)
+## What's included
+
+- `.gitconfig` — git configuration
+- `.tmux.conf` — tmux configuration
+- `.zshrc` — ZSH configuration
+- `dot-config/zsh-custom/` — ZSH themes
+- `dot-config/nvim/init.lua` — minimal plugin-free Neovim config
+
+## Install
 
 ```sh
-# install configs for common CLI tools: zsh, tmux, nvim, etc.
+git clone <this-repo> ~/.stow-dotfiles
+cd ~/.stow-dotfiles
 make tty
-
-# install CLI-based scripts
-make tty_scripts
 ```
 
-## common GUI
-
-Config files for common GUI applications
+## Options
 
 ```sh
-make desktop
-make gui_scripts
+make tty SIM=1            # dry-run
+make tty ACTION=restow    # prune stale symlinks and re-stow
+make tty ACTION=delete    # remove symlinks
 ```
-
-## sway desktop profile
-
-Dependencies: `sway, i3status, dunst, fuzzel, foot, gammastep, kanshi, swaylock`
-
-```sh
-make sway_desktop
-make gui_scripts
-```
-
